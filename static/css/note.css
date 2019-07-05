@@ -1,0 +1,89 @@
+/*初始化*/
+div#table_container{
+  display: table;
+  width:100%;
+  margin:0 auto;
+}
+
+header>h1{
+  text-align: center;
+}
+
+#logo{
+  position: absolute;
+  left: -70px;
+  top: -50px;
+}
+
+/*主站导航*/
+nav#main{
+  font-size: 150%;
+  background-color: #efe5d0;
+  margin: 160px 10px 0px 10px;
+}
+nav#main ul {
+  margin: 0px;
+  list-style-type: none;
+  padding: 5px 0px 5px 0px;
+}
+nav#main ul li {
+  display: inline;
+  padding: 5px 10px 5px 10px;
+}
+
+/*文章列表目录导航*/
+nav#artical{
+  display: table-cell;
+  background-color: white;
+  width: 15%;
+  padding:15px;
+}
+.dropdown{
+  font-size: 150%;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 60px;
+}
+.dropdown_content{
+  display: none;
+  position: absolute;
+  background-color: #f9;
+  font-size: 100%;
+}
+.dropdown:hover .dropdown_content{
+  display: block;
+}
+.dropdown_content a {
+  color:black;
+  text-decoration: none;
+  display: block;
+  font-size: 100%;
+}
+
+div.month{
+  color: #0c0;
+  margin-top: 60px;
+}
+
+/*文章主体*/
+section#artical_text{
+  display: table-cell;
+  background-color: red;
+  width:70%;
+}
+
+/*帮助资源链接*/
+aside#help{
+  display: table-cell;
+  background-color: blue;
+  width: 15%;
+}
+
+footer{
+  background-color: grey;
+  color:            #efe5d0;
+  text-align:       center;
+  padding:          15px;
+  margin: 0px 10px 10px 10px;
+  font-size:        90%;
+}
