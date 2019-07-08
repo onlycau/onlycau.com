@@ -1,9 +1,4 @@
-/*初始化*/
-div#table_container{
-  display: table;
-  width:100%;
-  margin:0 auto;
-}
+/*页面头和log以及顶部导航*/
 
 header>h1{
   text-align: center;
@@ -13,13 +8,15 @@ header>h1{
   position: absolute;
   left: -70px;
   top: -50px;
+  z-index: -1;
 }
 
-/*主站导航*/
 nav#main{
   font-size: 150%;
   background-color: #efe5d0;
-  margin: 160px 10px 0px 10px;
+  margin: 160px 10px 20px 10px;
+  position: relative;
+  z-index: 1;
 }
 nav#main ul {
   margin: 0px;
@@ -31,10 +28,18 @@ nav#main ul li {
   padding: 5px 10px 5px 10px;
 }
 
+/*列表布局 拆三部分*/
+div#table_container{
+  display: table;
+  width:100%;
+  margin-top: :20px;
+}
+
+
 /*文章列表目录导航*/
 nav#artical{
   display: table-cell;
-  background-color: white;
+  background-color: #7a7a7a;
   width: 15%;
   padding:15px;
 }
@@ -47,7 +52,7 @@ nav#artical{
 .dropdown_content{
   display: none;
   position: absolute;
-  background-color: #f9;
+  background-color: #f92;
   font-size: 100%;
 }
 .dropdown:hover .dropdown_content{
@@ -68,19 +73,20 @@ div.month{
 /*文章主体*/
 section#artical_text{
   display: table-cell;
-  background-color: red;
+  background-color: white;
+  padding: 50px;
   width:70%;
+  vertical-align: top;
 }
 
 /*帮助资源链接*/
 aside#help{
   display: table-cell;
-  background-color: blue;
+  background-color: #7a7a7a;
   width: 15%;
 }
 
 footer{
-  background-color: grey;
   color:            #efe5d0;
   text-align:       center;
   padding:          15px;
