@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="../css/note.css">
+</head>
+
+<body>
+
+  <header>
+    <img id="logo" src="../images/logo_book.png">
+    <h1>Onlycau's Note</h1>
+  </header>
+
+  <nav id="main">
+      <ul>
+        <li class="selected"><a href="note.html">Home</a></li>
+        <li><a href="sign_in">JavaScript</a></li>
+        <li><a href="">Pass</a></li>
+        <li><a href="">Pass</a></li>
+        <li><a href="">Pass</a></li>
+      </ul>
+  </nav>
+
+  <form onsubmit="return chkForm()" action = "http://localhost:5000/login" method = "post">
+    <p>Enter Name:</p>
+    <p><input type = "text" name = "name" /></p>
+    <p>Password:</p>
+    <p><input type="text" name="password" ></p>
+    <p>Password again:</p>
+    <p><input type="text" name="password2"></p>
+    <p><input type = "submit" value = "submit" /></p>
+  </form>
+
+  <footer>
+    onlycau©2019<br>
+    <a href="http://www.miit.gov.cn">备案号33333333</a>
+  </footer>
+
+  <script type="text/javascript" src="../js/note.js"></script>
+
+</body>
+</html>

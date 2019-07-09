@@ -34,29 +34,35 @@ class Mysql(object):
         cursor.close()
         return rows
 
+    def sign_up(self, name, password):
+        cursor = self.conn.cursor()
+        sql1 = "select user_id from users where user_name='%s'" % name
+        sql2 = "insert into users (user_name,user_password) values ('%s','%s')" % (name, password)
+        print(sql2)
+        if cursor.execute(sql1) != 0:
+            cursor.close()
+            return -1
+        else:
+            rows = cursor.execute(sql2)
+            self.conn.commit()
+            cursor.close()
+            return rows
+
+    def sign_in(self, name, password):
+        cursor = self.conn.cursor()
+        sql = "select user_password from users where user_name='%s'" % name
+        if cursor.execute(sql) == 0:
+            return -1
+        if cursor.fetchone()[0] == password:
+            return 1
+        else:
+            return 0
+
 
 def test():
-    a='''      <h1>07/01-07/07第一周学习大概</h1>
-      <div class="blog">
-        head first and csscss回顾了一下基础，熟悉了样式的基本使用，熟练度有待项目中提高。<br>
-        目前需重点巩固方向：
-        <li>盒模型 content area-padding-border-margin</li>
-        <li>选择器 </li>
-        <li>布局与定位</li><br>
-        js高级程序设计跳着看了半本，下周粗略过完第一遍，个人博客1.0搭建完后再细看理解一遍。<br>
-        <li>对象的几个构造模式 数组、对象的生存周期等</li><br>
-        随时都需要注意熟悉的一些细节：<br>
-        <li>语义化 对象 标签命名 代码布局 注释（大小写）</li>
-        <li>重用</li><br>
-        <h2>下周计划</h2>
-        <p>
-          js高级程序设计过完第一遍<br>
-          个人博客beta搭完:<br>
-          主页 评论 登录 注册 后台 
-        </p>
 
-      <div>'''
-    print(Mysql().save_blog(a))
+    a = Mysql().sign_up('c5123345', '2ld22255')
+    print(a)
 
 
 if __name__ == '__main__':
