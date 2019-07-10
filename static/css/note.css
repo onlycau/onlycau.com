@@ -1,6 +1,6 @@
 /*页面头和log以及顶部导航*/
 
-header>h1{
+h1{
   text-align: center;
 }
 
@@ -10,7 +10,7 @@ header>h1{
   top: -50px;
   z-index: -1;
 }
-
+/*导航栏*/
 nav#main{
   font-size: 150%;
   background-color: #efe5d0;
