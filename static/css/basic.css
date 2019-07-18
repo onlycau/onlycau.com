@@ -24,9 +24,7 @@ header{
   display: inline-block;
   font-size: 150%;
   text-align: center;
-  width: 100px;
-  padding-right: 15px;
-  padding-left: 15px;
+  width: 130px;
 }
 #nav_top ul>li:hover{
   background-color: #D1BA74;
@@ -35,8 +33,9 @@ header{
   display: none;
   position: absolute;
   text-align: left;
-  width: 100px;
-  padding-right: 5px;
+/*  width: 100px;*/
+  padding-left: 15px;
+  padding-right: 15px;
 }
 }
 #welcome{

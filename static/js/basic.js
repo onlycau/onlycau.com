@@ -1,3 +1,5 @@
+
+//顶端导航栏
 new Vue({
   el:'#nav_top',
   methods:{
@@ -26,8 +28,7 @@ function my_request(sort,action='get', async=false){
     }
   }*/
 }
-//
-
+//文章摘要
 var blogs = my_request("homepage")
 var count = 0
 var componnet_summary = {
@@ -57,6 +58,20 @@ var vm = new Vue({
       this.$nextTick(()=>{
         this.hack_reset=true
       })
+    }
+  }
+})
+
+//登录状态
+new Vue({
+  el:'#sign',
+  computed:{
+    has_sign_in:function(){
+      var xmlhttp = new XMLHttpRequest
+      xmlhttp.open('get', '/has_sign_in/', false)
+      xmlhttp.send()
+      status = xmlhttp.responseText
+      return (status !== "-1")
     }
   }
 })

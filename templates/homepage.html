@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <title></title>
-  <link rel="stylesheet" type="text/css" href="../css/basic.css">
-  <link rel="stylesheet" type="text/css" href="../css/blog_overview.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/basic.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/blog_overview.css">
 </head>
 
 <body>
 
   <header>
     <div id="logo">
-      <img id="logo" src="../images/logo_book2.png">
+      <img id="logo" src="/static/images/logo_book2.png">
     </div>
     <div id="title">
       <h1>Onlycau的小站</h1>
@@ -34,12 +34,15 @@
       </ul>
   </nav>
 
-  <div>
-    <span id="welcome">欢迎</span>
-    <span id="sign">
-      <a href="\sing_in\">登录</a>
-      <a href="\sing_up\">注册</a>
-    </span>
+  <div id="sign">
+    <div v-if="has_sign_in">
+        <a href="\user\">{{name}}</a>
+        <a href="\sign_up\">退出</a>
+    </div>
+    <div v-else>
+        <a href="\sign_in\">登录</a>
+        <a href="\sign_up\">注册</a>
+    </div>
   </div>
 
   <div id="main">
@@ -58,8 +61,8 @@
     <a href="http://www.miit.gov.cn">备案号33333333</a>
   </footer>
 
-  <script type="text/javascript" src="../js/vue.js"></script>
-  <script type="text/javascript" src="../js/basic.js"></script>
+  <script type="text/javascript" src="/static/js/vue.js"></script>
+  <script type="text/javascript" src="/static/js/basic.js"></script>
 
 </body>
 </html>
