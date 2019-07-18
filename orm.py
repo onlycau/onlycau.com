@@ -3,6 +3,7 @@
 
 
 import pymysql
+import json
 
 
 class Mysql(object):
@@ -19,20 +20,17 @@ class Mysql(object):
         conn = pymysql.connect(user=self.user, password=self.password, db=self.db, charset='utf8')
         return conn
 
-    def get_blog_by_id(self, id):
-        sql = 'select blog_text from my_blogs where blog_id=%s' % id
-        cursor = self.conn.cursor()
+    def get_blog_by_sort(self, sort, count=5):
+        sql = "select * from blogs where sort='%s' order by date desc  limit %d" % (sort, count)
+        if sort == 'homepage':
+            sql = "select * from blogs order by date desc limit %d" % (count)
+        cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         cursor.execute(sql)
-        return cursor.fetchall()
-
-    def save_blog(self, text):
-        sql = 'insert into my_blogs (blog_text) values (\'%s\')' % text
-        cursor = self.conn.cursor()
-        rows = 0
-        rows = cursor.execute(sql)
-        self.conn.commit()
-        cursor.close()
-        return rows
+        r = cursor.fetchall()
+        for i in r:
+            if i.get('date'):
+                i['date'] = str(i['date'])
+        return json.dumps(r)
 
     def sign_up(self, name, password):
         cursor = self.conn.cursor()
@@ -60,9 +58,7 @@ class Mysql(object):
 
 
 def test():
-
-    a = Mysql().sign_up('c5123345', '2ld22255')
-    print(a)
+    pass
 
 
 if __name__ == '__main__':

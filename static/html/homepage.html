@@ -3,75 +3,39 @@
 <head>
   <meta charset="utf-8">
   <title></title>
-  <link rel="stylesheet" type="text/css" href="../css/note.css">
+  <link rel="stylesheet" type="text/css" href="../css/basic.css">
 </head>
 
 <body>
 
   <header>
-    <img id="logo" src="../images/logo_book.png">
-    <h1>Onlycau's Note</h1>
+    <div id="logo">
+      <img id="logo" src="../images/logo_book2.png">
+    </div>
+    <div id="title">
+      <h1>Onlycau的小站</h1>
+    </div>
+    <div id="none"></div>
   </header>
 
-  <nav id="main">
+  <nav id="nav_top">
       <ul>
-        <li class="selected"><a href="http://127.0.0.1:5000/">Home</a></li>
-        <li><a href="sign_in">JavaScript</a></li>
-        <li><a href="">Pass</a></li>
-        <li><a href="http://127.0.0.1:5000/sign_in">登陆</a></li>
-        <li><a href="http://127.0.0.1:5000/sign_up">注册</a></li>
+        <li><a href="http://127.0.0.1:5000/">首页</a></li>
+        <li v-on:mouseover='show_dropdown' v-on:mouseleave='dis_dropdown'><a href="">学习笔记</a>
+          <div class="dropdown">
+            <span class="drop_content"><a href="">JavaScript</a></span><br>
+            <span class="drop_content"><a href="">HTML</a></span><br>
+            <span class="drop_content"><a href="">Python</a></span><br>
+            <span class="drop_content"><a href="">Other</a></span><br>
+          </div>
+        </li>
+        <li><a href="">个人简历</a></li>
       </ul>
   </nav>
 
-  <div id="table_container">
-    <nav id="artical">
-      <div class="dropdown">
-        <span class="year">2019</span><br>
-        <div class="dropdown_content">
-          <a href="http://127.0.0.1:5000/blog">2018</a>
-          <a href="sign_in">2017</a>
-        </div>
-      <div class="month">
-        <span>12(n)</span><br>
-        <span>11(n)</span><br>
-        <span>10(n)</span><br>
-        <span>09(n)</span><br>
-        <span>08(n)</span><br>
-        <span id="2019_07">07(<button onclick="show_blogs2('2019_07')">3</button>)</span><br>
-        <span>06(n)</span><br>
-        <span>05(n)</span><br>
-        <span>04(n)</span><br>
-        <span>03(n)</span><br>
-        <span>02(n)</span><br>
-        <span>01(n)</span><br>
-      </div>
-      </div>
-    </nav>
-
-    <section id="artical_text">
-      <h1>07/01-07/07第一周学习大概</h1>
-      <div class="blog">
-        《head first and css》css回顾了一下基础，熟悉了样式的基本使用，熟练度有待项目中提高。<br>
-        目前需重点巩固方向：
-        <li>盒模型 content area-padding-border-margin</li>
-        <li>选择器 </li>
-        <li>布局与定位</li><br>
-        《js高级程序设计》跳着看了半本，下周粗略过完第一遍，个人博客1.0搭建完后再细看理解一遍。<br>
-        <li>对象的几个构造模式 数组、对象的生存周期等</li><br>
-        随时都需要注意熟悉的一些细节：<br>
-        <li>语义化 对象 标签命名 代码布局 注释（大小写）</li>
-        <li>重用</li><br>
-        <h2>下周计划</h2>
-        <p>
-          js高级程序设计过完第一遍<br>
-          个人博客beta搭完:<br>
-          主页 评论 登录 注册 后台 
-        </p>
-
-      <div>
-    </section>
-
-    <aside id="help">help</aside>
+  <div id="main">
+    <div id="blogs">blogs{{blogs}}</div>
+    <div id="others">something</div id="others">
   </div>
 
   <footer>
@@ -79,7 +43,8 @@
     <a href="http://www.miit.gov.cn">备案号33333333</a>
   </footer>
 
-  <script type="text/javascript" src="../js/note.js"></script>
+  <script type="text/javascript" src="../js/vue.js"></script>
+  <script type="text/javascript" src="../js/basic.js"></script>
 
 </body>
 </html>
