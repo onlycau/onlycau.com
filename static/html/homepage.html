@@ -30,14 +30,14 @@
             <span class="drop_content"><a v-on:click="new_sort('others')">Other</a></span><br>
           </div>
         </li>
-        <li><a href="">个人简历{{blogs}}</a></li>
+        <li><a href="">个人简历</a></li>
       </ul>
   </nav>
 
   <div id="sign">
     <div v-if="has_sign_in">
-        <a href="\user\">{{name}}</a>
-        <a href="\sign_up\">退出</a>
+        <a href="\user\">{{username}}</a>
+        <a href="\sign_out\">退出</a>
     </div>
     <div v-else>
         <a href="\sign_in\">登录</a>

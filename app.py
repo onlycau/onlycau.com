@@ -15,9 +15,9 @@ app.config['SECRET_KEY'] = 'xxxxxx'
 @app.route('/')
 def index():
     if session.get('logged'):
-        return render_template('homepage.html', name=session['logged'])
+        return app.send_static_file('html/homepage.html')
     else:
-        return render_template('homepage.html', name='登录')
+        return app.send_static_file('html/homepage.html')
 
 
 # 请求文章摘要的后台方法，默认为最新5篇文章
@@ -43,11 +43,39 @@ def sign_in():
             return 'wrong password'
         if status_code == 1:
             session['logged'] = user
-            return render_template('homepage.html', name=session['logged'])
+            return app.send_static_file('html/homepage.html')
     else:
         return app.send_static_file('html/sign_in.html')
 
 
+# 注册
+@app.route('/sign_up/', methods=['GET', 'POST'])
+def sign_up():
+    if request.args.get('name'):
+        name = request.args.get('name')
+        password = request.args.get('password')
+        status_code = Mysql().sign_up(name, password)
+        if status_code == 1:
+            return '1'
+        else:
+            return '-1'
+    else:
+        return app.send_static_file('html/sign_up.html')
+
+
+# 退出
+@app.route('/sign_out/')
+def sign_out():
+    if session.get('logged'):
+        session.pop('logged')
+        session.clear
+        print(session.get('logged'))
+        return '1'
+    else:
+        return '-1'
+
+
+# 是否登录判断 客户端每次访问时会额外请求一次 获取登录状态
 @app.route('/has_sign_in/')
 def has_sign_in():
     if session.get('logged'):

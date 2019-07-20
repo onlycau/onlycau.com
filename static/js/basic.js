@@ -65,12 +65,16 @@ var vm = new Vue({
 //登录状态
 new Vue({
   el:'#sign',
+  data:{
+    username:''
+  },
   computed:{
     has_sign_in:function(){
       var xmlhttp = new XMLHttpRequest
       xmlhttp.open('get', '/has_sign_in/', false)
       xmlhttp.send()
       status = xmlhttp.responseText
+      this.username = status
       return (status !== "-1")
     }
   }

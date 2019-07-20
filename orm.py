@@ -36,7 +36,6 @@ class Mysql(object):
         cursor = self.conn.cursor()
         sql1 = "select user_id from users where user_name='%s'" % name
         sql2 = "insert into users (user_name,user_password) values ('%s','%s')" % (name, password)
-        print(sql2)
         if cursor.execute(sql1) != 0:
             cursor.close()
             return -1
