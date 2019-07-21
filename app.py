@@ -69,10 +69,9 @@ def sign_out():
     if session.get('logged'):
         session.pop('logged')
         session.clear
-        print(session.get('logged'))
-        return '1'
+        return app.send_static_file('html/homepage.html')
     else:
-        return '-1'
+        return '退出失败'
 
 
 # 是否登录判断 客户端每次访问时会额外请求一次 获取登录状态
