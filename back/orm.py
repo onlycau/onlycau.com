@@ -20,7 +20,7 @@ class Mysql(object):
         conn = pymysql.connect(user=self.user, password=self.password, db=self.db, charset='utf8')
         return conn
 
-    def get_blog_by_sort(self, sort, count=5):
+    def get_blog_by_sort(self, sort, count=5, summary=True):
         sql = "select * from blogs where sort='%s' order by date desc  limit %d" % (sort, count)
         if sort == 'homepage':
             sql = "select * from blogs order by date desc limit %d" % (count)
@@ -30,6 +30,8 @@ class Mysql(object):
         for i in r:
             if i.get('date'):
                 i['date'] = str(i['date'])
+            if summary:
+                i['text'] = i['text'][0:100]
         return json.dumps(r)
 
     def sign_up(self, name, password):

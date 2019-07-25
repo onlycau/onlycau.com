@@ -3,21 +3,13 @@
 
 
 from flask import Flask, render_template, request, session
+from flask_cors import CORS
 
 from orm import Mysql
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'xxxxxx'
-
-
-# 主页
-@app.route('/')
-def index():
-    if session.get('logged'):
-        return app.send_static_file('html/homepage.html')
-    else:
-        return app.send_static_file('html/homepage.html')
 
 
 # 请求文章摘要的后台方法，默认为最新5篇文章
@@ -84,4 +76,6 @@ def has_sign_in():
 
 
 if __name__ == '__main__':
+    # CORS处理跨域
+    CORS(app, supports_credentials=True)
     app.run(debug=True)
