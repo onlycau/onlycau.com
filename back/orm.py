@@ -5,7 +5,6 @@
 import pymysql
 import json
 
-
 class Mysql(object):
 
     def __init__(self):
@@ -20,46 +19,35 @@ class Mysql(object):
         conn = pymysql.connect(user=self.user, password=self.password, db=self.db, charset='utf8')
         return conn
 
-    def get_blog_by_sort(self, sort, count=5, summary=True):
-        sql = "select * from blogs where sort='%s' order by date desc  limit %d" % (sort, count)
-        if sort == 'homepage':
-            sql = "select * from blogs order by date desc limit %d" % (count)
+    def select_blogs(self, family, begin=0, count=2, sort_key='date'):
+        sql = "select * from blogs where type='%s' order by date desc" % (family)
+        if family == 'all':
+            sql = "select * from blogs order by date desc "
+        # DictCursor 返回字典结构的代码 待修改
         cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         cursor.execute(sql)
-        r = cursor.fetchall()
-        for i in r:
-            if i.get('date'):
-                i['date'] = str(i['date'])
-            if summary:
-                i['text'] = i['text'][0:100]
-        return json.dumps(r)
+        blogs = cursor.fetchall()[begin:begin + count]
+        for blog in blogs:
+            blog['date'] = str(blog['date'])
+        return json.dumps(blogs)
 
-    def sign_up(self, name, password):
-        cursor = self.conn.cursor()
-        sql1 = "select user_id from users where user_name='%s'" % name
-        sql2 = "insert into users (user_name,user_password) values ('%s','%s')" % (name, password)
-        if cursor.execute(sql1) != 0:
-            cursor.close()
-            return -1
-        else:
-            rows = cursor.execute(sql2)
-            self.conn.commit()
-            cursor.close()
-            return rows
-
-    def sign_in(self, name, password):
-        cursor = self.conn.cursor()
-        sql = "select user_password from users where user_name='%s'" % name
-        if cursor.execute(sql) == 0:
-            return -1
-        if cursor.fetchone()[0] == password:
-            return 1
-        else:
-            return 0
+    def select_blog_by_id(self, blog_id):
+        sql = "select * from blogs where id = %s" % blog_id
+        cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
+        cursor.execute(sql)
+        r = cursor.fetchone()
+        # 判断
+        blog = r
+        if blog.get('date'):
+            blog['date'] = str(blog['date'])
+        return json.dumps(blog)
 
 
 def test():
-    pass
+    blogs = Mysql().select_blogs('all', 5, 2)
+    print(blogs)
+    blog = Mysql().select_blog_by_id(3)
+    print(blog)
 
 
 if __name__ == '__main__':

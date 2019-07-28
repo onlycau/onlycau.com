@@ -3,7 +3,7 @@
     <div class='overview'>
       <div class='overview_top'>
         <span class='blog_sort'>{{data.sort}}</span>
-        <span class='blog_title'>{{data.title}}</span>
+        <span class='blog_title' @click="to_blog">{{data.title}}</span>
       </div>
       <div class='blog_text'>
         <p>{{data.text}}</p>
@@ -22,6 +22,11 @@
     data:function(){
       return {}
     },
-    props:['data']
+    props:['data'],
+    methods:{
+      to_blog:function(){
+        this.$router.push('blog/'+this.data.id)
+      }
+    }
   }
 </script>

@@ -5,7 +5,7 @@ create table if not exists `blogs`(
 `summary` varchar(1000),
 `date` timestamp null default current_timestamp,
 `author` char(30) default 'onlycau',
-`sort` char(30),
+`family` char(30),
 `tags` char(100),
 `views` int default 0,
 primary key(`id`)

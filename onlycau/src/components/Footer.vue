@@ -1,7 +1,7 @@
 <template>
   <div id="footer">
     onlycau©2019<br>
-    <a href="http://www.miit.gov.cn">备案号33333333</a>
+    <a href="http://www.miit.gov.cn">渝ICP备19009971号</a>
   </div>
 </template>
 
