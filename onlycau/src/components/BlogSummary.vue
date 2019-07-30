@@ -2,7 +2,7 @@
   <div v-if='data'>
     <div class='overview'>
       <div class='overview_top'>
-        <span class='blog_sort'>{{data.sort}}</span>
+        <span class='blog_type'>{{data.blog_type}}</span>
         <span class='blog_title' @click="to_blog">{{data.title}}</span>
       </div>
       <div class='blog_text'>
@@ -25,8 +25,36 @@
     props:['data'],
     methods:{
       to_blog:function(){
-        this.$router.push('blog/'+this.data.id)
+        this.$router.push('/blog/'+this.data.id)
       }
     }
   }
 </script>
+
+<style type="text/css">
+/* 博客文章概览的样式 */
+.overview{
+  margin: 30px 10px 0px 10px;
+}
+.overview_top{
+  text-align: left;
+}
+.overview_bottom{
+  text-align: right;
+}
+.blog_type{
+  color: red;
+}
+.blog_title{
+  font-size: 150%;
+  color: green;
+  padding-left: 30px;
+}
+.blog_author{
+  color: red;
+  padding-right: 20px;
+}
+.blog_date{
+  padding-right: 10px;
+}
+</style>

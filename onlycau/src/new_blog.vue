@@ -1,0 +1,86 @@
+<template>
+  <div id="new_blog">
+    <h2>随便写写文章啦</h2>
+    <div  id="new_blog_title">
+      <input ref='title_value' placeholder="输入文章标题" maxlength="50">
+    </div>
+
+    <div><editor ref='editor'></editor></div>
+
+    <div id="new_blog_tag">文章标签</div>
+
+    <div>
+      文章分类:
+      <span class="new_blog_type" v-for="type in blog_types">
+        <label><input type="radio" name="blog_type" value=type>{{type}}</label>
+      </span>
+    </div>
+    <div id="new_blog_author">
+      文章作者:<span id="author_onlycau">{{new_blog_author}}</span>
+    </div>
+    <div id="post_blog">
+      <span @click='post()'>发布</span>
+    </div>
+  </div>
+</template>
+
+<script>
+import editor from './components/editor.vue'
+
+export default{
+  name:'new_blog',
+  data:function(){
+    return{
+      url: 'http://127.0.0.1:5000/api/blog/new',
+      new_blog_author:'onlycau',
+      blog_types:['HTML', 'JavaScript', 'Others', 'Python',],
+    }
+  },
+  components:{
+    editor,
+  },
+  methods:{
+    post(){
+      var data={
+        'title': this.$refs.title_value.value,
+        'blog_type': 'JavaScript',
+        'text': this.$refs.editor.editorContent}
+      this.$axios.post(this.$data.url, data).then((response)=>{
+        alert(response)
+        })
+    }
+  }
+}
+</script>
+<style>
+#new_blog>div{
+  margin:5px;
+}
+#new_blog_title{
+  margin: 20px 5px 20px 0px;
+}
+#new_blog_title input{
+  text-align: left;
+  font-size: 140%;
+  width: 100%;
+  height: 30px;
+  background-color: #eee;
+}
+#editor{
+  margin: 20px;
+}
+.new_blog_type{
+  font-size: 130%;
+  width: 60px;
+  margin: 5px;
+}
+#author_onlycau{
+  font-size: 140%;
+  margin: 0px 0px 10px 10px;
+  color:red;
+}
+#post_blog{
+  font-size: 140%;
+  text-align: center;
+}
+</style>

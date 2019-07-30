@@ -1,23 +1,23 @@
 <template>
     <div id="app">
       <MyHeader></MyHeader>
+      <NavTop></NavTop>
       <router-view></router-view>
       <Footer></Footer>
-      <WriteBlog></WriteBlog>
     </div>
 </template>
 
 <script>
 import MyHeader from './components/MyHeader.vue'
 import Footer from './components/Footer.vue'
-import WriteBlog from './WriteBlog.vue'
+import NavTop from './components/NavTop.vue'
 
 export default {
   name: 'App',
   components:{
     MyHeader,
     Footer,
-    WriteBlog,
+    NavTop,
   }
 }
 </script>

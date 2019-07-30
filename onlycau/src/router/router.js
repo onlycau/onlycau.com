@@ -3,30 +3,26 @@ import VueRouter from "vue-router";
 
 // 引入组件
 import homepage from "../homepage.vue"
-import SignIn from "../SignIn.vue";
-import blog from '../blog.vue'
-import WriteBlog from '../WriteBlog.vue'
+import blog from "../blog.vue"
+import new_blog from "../new_blog.vue"
 
 // 要告诉 vue 使用 vueRouter
 Vue.use(VueRouter);
 
 const routes = [
     {
-        path:"/sign_in",
-        component: SignIn
+      path:"/blogs/:blogs_type",
+      component:homepage
     },
     {
-      path:"/",
-      component:homepage,
-    },
-    {
-      path:"/blog/:id",
+      path:"/blog/:blog_id",
       component:blog
     },
     {
-      path:"/write_blog",
-      component:WriteBlog
+      path:"/new_blog",
+      component:new_blog
     }
+
 ]
 
 var router =  new VueRouter({

@@ -6,37 +6,40 @@ from flask import Flask, render_template, request, session
 from flask_cors import CORS
 
 from orm import Mysql
-import json
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'xxxxxx'
 
 
-# 请求文章摘要的后台方法，默认为最新5篇文章
-@app.route('/get_blogs/', methods=['GET'])
-def get_blogs():
-    sort = 'homepage'
+# 请求文章摘要的后台方法，默认为最新2篇文章
+@app.route('/api/blog/select_blogs', methods=['GET'])
+def select_blogs():
+    blogs_type = 'all'
     begin = 0
-    if request.args.get('id'):
-        blog = Mysql().get_blog_by_id(request.args.get('id'))
-        return blog
-    if request.args.get('sort'):
-        sort = request.args.get('sort')
+    if request.args.get('blogs_type'):
+        blogs_type = request.args.get('blogs_type')
     if request.args.get('begin'):
         begin = int(request.args.get('begin'))
-    blogs = Mysql().get_blog_by_sort(sort, begin)
+    blogs = Mysql().select_blogs(blogs_type, begin)
     return blogs
 
 
-@app.route('/push_blog/', methods=['POST'])
-def push_blog():
-    if request.method == 'GET':
-        return json.dumps('hehe')
-    else:
-        print(request.get_data())
-        return json.dumps("haha")
+@app.route('/api/blog/select_blog', methods=['GET'])
+def select_blog():
+    blog_id = request.args.get('blog_id')
+    blog = Mysql().select_blog_by_id(blog_id)
+    print(blog)
+    return blog
 
+
+@app.route('/api/blog/new', methods=['POST'])
+def new_blog():
+    blog = request.get_json()
+    print(blog)
+    if blog:
+        Mysql().new_blog(blog)
+    return blog
 # # 登录
 # @app.route('/sign_in/', methods=['GET', 'POST'])
 # def sign_in():

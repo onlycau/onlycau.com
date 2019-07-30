@@ -1,8 +1,6 @@
 <template>
     <div id="homepage">
       <NavPage></NavPage>
-      <router-link to="/sign_in">登录</router-link>
-      <router-view></router-view>
     </div>
 </template>
 
