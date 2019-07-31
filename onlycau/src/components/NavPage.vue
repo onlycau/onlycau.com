@@ -36,7 +36,7 @@
     data:function(){
       return {
         data:{},
-        url:'http://127.0.0.1:5000/api/blog/select_blogs?blogs_type=',
+        url:'/api/blog/select_blogs?blogs_type=',
         blogs_type:this.$route.params.blogs_type,
         current_page:1,
         max_page:1,

@@ -31,7 +31,7 @@ export default{
   name:'new_blog',
   data:function(){
     return{
-      url: 'http://127.0.0.1:5000/api/blog/new',
+      url: '/api/blog/new',
       new_blog_author:'onlycau',
       blog_types:['HTML', 'JavaScript', 'Others', 'Python',],
     }

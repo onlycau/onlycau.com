@@ -22,7 +22,7 @@
     },
     methods:{
       get_blog(id){
-        const url = 'http://127.0.0.1:5000/api/blog/select_blog?blog_id=' + id
+        const url = '/api/blog/select_blog?blog_id=' + id
         this.$axios.get(url).then((response)=>{
           this.$data.data = response.data
         })

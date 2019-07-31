@@ -23,7 +23,7 @@ export default {
       var data = {
         lala:this.$refs.editor.editorContent
       }
-      var url = 'http://127.0.0.1:5000/push_blog/'
+      var url = 'http://onlycau.com/push_blog/'
       this.$axios.post(url,data).then(()=>{
         alert('hehe')
       })
