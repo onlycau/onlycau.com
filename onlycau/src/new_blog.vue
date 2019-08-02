@@ -12,7 +12,7 @@
     <div>
       文章分类:
       <span class="new_blog_type" v-for="type in blog_types">
-        <label><input type="radio" name="blog_type" value=type>{{type}}</label>
+        <label @click='change_type(type)'><input type="radio" name="blog_type" value=type>{{type}}</label>
       </span>
     </div>
     <div id="new_blog_author">
@@ -34,19 +34,24 @@ export default{
       url: '/api/blog/new',
       new_blog_author:'onlycau',
       blog_types:['HTML', 'JavaScript', 'Others', 'Python',],
+      blog_type:'Others'
     }
   },
   components:{
     editor,
   },
   methods:{
+    change_type(blog_type){
+      this.$data.blog_type = blog_type
+    },
+    // todo 输入检查
     post(){
       var data={
         'title': this.$refs.title_value.value,
-        'blog_type': 'JavaScript',
+        'blog_type': this.$data.blog_type,
         'text': this.$refs.editor.editorContent}
       this.$axios.post(this.$data.url, data).then((response)=>{
-        alert(response)
+        alert('ok')
         })
     }
   }

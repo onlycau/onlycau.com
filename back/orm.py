@@ -5,6 +5,7 @@
 import pymysql
 import json
 
+
 class Mysql(object):
 
     def __init__(self):
@@ -16,14 +17,17 @@ class Mysql(object):
 
     def __conn(self):
 
-        conn = pymysql.connect(user=self.user, password=self.password, db=self.db, charset='utf8')
+        conn = pymysql.connect(user=self.user, password=self.password,
+                               db=self.db, charset='utf8')
         return conn
 
-    def select_blogs(self, blogs_type, begin=0, count=2, sort_key='date'):
-        sql = "select * from blogs where blog_type='%s' order by date desc" % (blogs_type)
+    def select_blogs(self, blogs_type, begin=0, count=5, sort_key='date'):
+        # todo 只选择一页的博客 博客条数另外写条查询语句
+        sql = "select * from blogs where blog_type='%s' order by date desc" % (
+            blogs_type)
         if blogs_type == 'all':
             sql = "select * from blogs order by date desc "
-        # DictCursor 返回字典结构的代码 待修改
+        # TODO: DictCursor 返回字典结构的代码 待优化
         cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         cursor.execute(sql)
         blogs = cursor.fetchall()
@@ -46,18 +50,43 @@ class Mysql(object):
         return json.dumps(blog)
 
     def new_blog(self, blog):
-        sql = "insert into blogs(title,blog_type,text,date) values ('%s','%s','%s','%s')" % (blog['title'], blog['blog_type'], blog['text'], '2019-07-30 19:13:00')
+        sql = "insert into blogs(title,blog_type,text,date) values \
+        ('%s','%s','%s','%s')" % (
+            blog['title'], blog['blog_type'],
+            blog['text'], '2019-07-31 19:13:00')
         cursor = self.conn.cursor()
         cursor.execute(sql)
         self.conn.commit()
         cursor.close()
         return 1
 
+    def new_web_comment(self, username, content, mailbox):
+        sql = "insert into web_comments(username, content, mailbox) values \
+        ('%s','%s','%s')" % (
+            username, content, mailbox)
+        cursor = self.conn.cursor()
+        row_affected = cursor.execute(sql)
+        self.conn.commit()
+        cursor.close()
+        return row_affected
+
+    def select_web_comments(self, begin=0, limit=10):
+        cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = "select count(*) from web_comments"
+        cursor.execute(sql)
+        count = cursor.fetchone()
+        sql = "select * from web_comments order by date desc \
+        limit %s,%s" % (begin, limit)
+        cursor.execute(sql)
+        web_comments = cursor.fetchall()
+        for comment in web_comments:
+            comment['date'] = str(comment['date'])
+        return json.dumps([{'count': count}] + web_comments)
+
+
 def test():
-    blogs = Mysql().select_blogs('all', 5, 2)
-    print(blogs)
-    blog = Mysql().select_blog_by_id(3)
-    print(blog)
+    r = Mysql().select_web_comments()
+    print(r)
 
 
 if __name__ == '__main__':

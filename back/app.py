@@ -36,10 +36,26 @@ def select_blog():
 @app.route('/api/blog/new', methods=['POST'])
 def new_blog():
     blog = request.get_json()
-    print(blog)
     if blog:
         Mysql().new_blog(blog)
     return blog
+
+
+@app.route('/api/new_web_comment')
+def new_web_comment():
+    username = request.args.get('username')
+    text = request.args.get('content')
+    mailbox = request.args.get('mailbox')
+    rows_efected = Mysql().new_web_comment(username, text, mailbox)
+    return str(rows_efected)
+
+
+@app.route('/api/select_web_comments')
+def select_web_comments():
+    begin = request.args.get('begin')
+    web_comments = Mysql().select_web_comments(begin)
+    return web_comments
+
 # # 登录
 # @app.route('/sign_in/', methods=['GET', 'POST'])
 # def sign_in():

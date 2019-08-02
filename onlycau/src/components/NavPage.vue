@@ -4,13 +4,13 @@
       <div id="summary">
         <BlogSummary :data='data[1]'></BlogSummary>
         <BlogSummary :data='data[2]'></BlogSummary>
-  <!--     <BlogSummary :data='data[3]'></BlogSummary>
+        <BlogSummary :data='data[3]'></BlogSummary>
         <BlogSummary :data='data[4]'></BlogSummary>
-        <BlogSummary :data='data[5]'></BlogSummary> -->
+        <BlogSummary :data='data[5]'></BlogSummary>
       </div>
 
       <div id="PageTurning">
-        <!-- 待优化 1.直接点击序号跳转页面 2.跳页 3.样式更新-->
+        <!-- TODO: 1.直接点击序号跳转页面 2.跳页 3.样式更新-->
         <div v-if='max_page > 1'>
           <span v-if='current_page > 1' @click="get_summary(--current_page)">&lt;</span>
           <span v-if='current_page > 2'>{{current_page - 2}}</span>
@@ -47,16 +47,17 @@
       this.get_summary(1)
     },
     watch:{
+      // 检测路由参数变化 手动重新请求博客摘要内容然后回流重绘页面
       $route(){
         this.get_summary(1)
       }
     },
     methods:{
       get_summary(current_page=1){
-        var url = this.$data.url + this.$route.params.blogs_type + '&begin=' + (current_page*2-2)
+        let url = this.$data.url + this.$route.params.blogs_type + '&begin=' + (current_page*5-5)
         this.$axios.get(url).then((response)=>{
           this.$data.data = response.data
-          this.$data.max_page = response.data[0].blog_count/2
+          this.$data.max_page = response.data[0].blog_count/5
           this.$data.current_page = current_page;
       })
       },
@@ -65,13 +66,13 @@
 </script>
 
 <style type="text/css">
-  /* 翻页栏*/
-  #PageTurning{
-    font-size: 150%;
-    text-align: center;
-    margin:10px 10px 10px 10px;
-  }
-  #current_page{
-    color: red;
-  }
+/* 翻页栏*/
+#PageTurning{
+  font-size: 150%;
+  text-align: center;
+  margin:10px 10px 10px 10px;
+}
+#current_page{
+  color: red;
+}
 </style>

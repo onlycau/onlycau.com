@@ -2,16 +2,17 @@
   <div>
     <nav id="nav_top">
       <ul>
-        <li><a href="http://127.0.0.1:5000/">首页</a></li>
-        <li v-on:mouseover='show_dropdown()' v-on:mouseleave='dis_dropdown()' @click = 'dis_dropdown()'><a href="">学习笔记</a>
+        <li @click="to_blogs('all')">首页</li>
+        <li @mouseover='show_dropdown()' @mouseleave='dis_dropdown()' @click = 'dis_dropdown()'><router-link to='/blogs/all'>学习笔记</router-link>
           <div id="dropdown">
-            <span class="drop_content">JavaScript</span><br>
-            <span class="drop_content">HTML</span><br>
-              <span class="drop_content" @click="to_blogs('python')" >Python</span><br>
-              <span class="drop_content" @click="to_blogs('others')">Other</span><br>
+            <span class="drop_content" @click="to_blogs('JavaScript')">JavaScript</span><br>
+            <span class="drop_content" @click="to_blogs('HTML')">HTML</span><br>
+              <span class="drop_content" @click="to_blogs('Python')" >Python</span><br>
+              <span class="drop_content" @click="to_blogs('Others')">Other</span><br>
           </div>
         </li>
         <li><a href="">个人简历</a></li>
+        <li><router-link to='/message'>给我留言</router-link></li>
       </ul>
     </nav>
   </div>

@@ -1,8 +1,11 @@
 <template>
   <div id="blog">
-    <div>{{data.title}}</div>
-    <div v-html='data.text'></div>
-    <div>{{data.date}}</div>
+    <div id="blog_title_blog">{{data.title}}</div>
+        <div>
+          <span id="blog_date_blog">{{data.date}}</span>
+          <span id="blog_author_blog">{{data.author}}</span>
+        </div>
+    <div id="blog_text_blog" v-html='data.text'></div>
   </div>
 </template>
 
@@ -32,5 +35,21 @@
 </script>
 
 <style>
-  
+#blog_title_blog{
+  font-size: 200%;
+  text-align: center;
+  margin: 20px 5px 20px 5px;
+}
+#blog_text_blog{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#blog_date_blog{
+  font-size: 120%;
+  margin-right: 20px;
+}
+#blog_author_blog{
+  font-size: 120%;
+  color: blue;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div v-if='data'>
-    <div class='overview'>
+     <div class='overview'>
       <div class='overview_top'>
         <span class='blog_type'>{{data.blog_type}}</span>
         <span class='blog_title' @click="to_blog">{{data.title}}</span>
