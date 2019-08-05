@@ -1,63 +1,62 @@
+<!-- to do 如果链接为当前路径 链接背景色改变 -->
 <template>
-  <div>
-    <nav id="nav_top">
-      <ul>
-        <li @click="to_blogs('all')">首页</li>
-        <li @mouseover='show_dropdown()' @mouseleave='dis_dropdown()' @click = 'dis_dropdown()'><router-link to='/blogs/all'>学习笔记</router-link>
-          <div id="dropdown">
-            <span class="drop_content" @click="to_blogs('JavaScript')">JavaScript</span><br>
-            <span class="drop_content" @click="to_blogs('HTML')">HTML</span><br>
-              <span class="drop_content" @click="to_blogs('Python')" >Python</span><br>
-              <span class="drop_content" @click="to_blogs('Others')">Other</span><br>
-          </div>
-        </li>
-        <li><a href="">个人简历</a></li>
-        <li><router-link to='/message'>给我留言</router-link></li>
-      </ul>
-    </nav>
-  </div>
+  <nav id="nav_top">
+    <NavTopChild :sth='one'></NavTopChild>
+    <NavTopChild :sth='two'></NavTopChild>
+    <NavTopChild :sth='three'></NavTopChild>
+    <NavTopChild :sth='four'></NavTopChild>
+    <NavTopChild :sth='five'></NavTopChild>
+    <NavTopChild :sth='six'></NavTopChild>
+
+  </nav>
 </template>
 
 <script>
-  export default{
-    name:'NavTop',
-    methods:{
-      show_dropdown(){
-        document.getElementById('dropdown').style.visibility='visible',
-        document.getElementById('dropdown').style.backgroundColor='#D1BA74'
+import NavTopChild from './NavTopChild.vue'
+export default{
+  name:'NavTop',
+  components:{
+    NavTopChild,
+  },
+  data(){
+    return {
+      one:{
+        url:'blogs/all',
+        name:'首页',
+        types:[],
       },
-      dis_dropdown(){
-        document.getElementById('dropdown').style.visibility='hidden'
+      two:{
+        url:'blogs/all',
+        name:'生活随笔',
+        types:['个人日记', '计划总结']
       },
-      to_blogs(blog_type){
-        this.$router.push('/blogs/'+blog_type)
+      three:{
+        url:"blogs/HTML,JavaScript,Python,Others",
+        name:'学习记录',
+        types:['HTML', 'JavaScript', 'Python', 'Others'],
       },
-  }
+      four:{
+        url:'blogs/all',
+        name:'关于博主',
+        types:[],
+      },
+      five:{
+        url:'blogs/all',
+        name:'备忘录',
+        types:['软件配置','软件指令']
+      },
+      six:{
+        url:'message',
+        name:'给我留言',
+        types:[],
+      },
+    }
+  },
 }
 </script>
 
 <style type="text/css">
-#nav_top ul{
-  margin: 0px;
-  padding-left: 0px;
+#nav_top{
   background-color: #C8C8A9;
-}
-#nav_top ul>li{
-  display: inline-block;
-  font-size: 150%;
-  text-align: center;
-  width: 130px;
-}
-#nav_top ul>li:hover{
-  background-color: #D1BA74;
-}
-#dropdown {
-  /*visibility 代替display 重绘代替回流https://zhuanlan.zhihu.com/p/53913989*/
-  visibility:hidden;
-  position: absolute;
-  text-align: left;
-/*  width: 100px;*/
-  padding-left: 15px;
-  padding-right: 15px;
 }
 </style>

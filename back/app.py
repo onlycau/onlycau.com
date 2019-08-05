@@ -12,16 +12,22 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'xxxxxx'
 
 
-# 请求文章摘要的后台方法，默认为最新2篇文章
+# 请求文章摘要的后台方法，默认为最新5篇文章
 @app.route('/api/blog/select_blogs', methods=['GET'])
 def select_blogs():
-    blogs_type = 'all'
+    blog_type = 'all'
     begin = 0
-    if request.args.get('blogs_type'):
-        blogs_type = request.args.get('blogs_type')
+
+    if request.args.get('blog_type'):
+        bh = request.args.get('blog_type')
+        if len(bh) > 11:
+            blog_type = bh.split(',')
+        else:
+            blog_type = []
+            blog_type.append(bh)
     if request.args.get('begin'):
         begin = int(request.args.get('begin'))
-    blogs = Mysql().select_blogs(blogs_type, begin)
+    blogs = Mysql().select_blogs(blog_type, begin)
     return blogs
 
 
@@ -41,19 +47,21 @@ def new_blog():
     return blog
 
 
-@app.route('/api/new_web_comment')
+@app.route('/api/new_comment')
 def new_web_comment():
     username = request.args.get('username')
     text = request.args.get('content')
     mailbox = request.args.get('mailbox')
-    rows_efected = Mysql().new_web_comment(username, text, mailbox)
+    table = request.args.get('table')
+    rows_efected = Mysql().new_comment(table, username, text, mailbox)
     return str(rows_efected)
 
 
-@app.route('/api/select_web_comments')
-def select_web_comments():
+@app.route('/api/comments')
+def select_comments():
     begin = request.args.get('begin')
-    web_comments = Mysql().select_web_comments(begin)
+    table = request.args.get('table')
+    web_comments = Mysql().select_comments(table, begin)
     return web_comments
 
 # # 登录

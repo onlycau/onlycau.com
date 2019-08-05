@@ -1,12 +1,8 @@
 <template>
   <div>
-    <div>
-      <div id="summary">
-        <BlogSummary :data='data[1]'></BlogSummary>
-        <BlogSummary :data='data[2]'></BlogSummary>
-        <BlogSummary :data='data[3]'></BlogSummary>
-        <BlogSummary :data='data[4]'></BlogSummary>
-        <BlogSummary :data='data[5]'></BlogSummary>
+    <div v-if='blog_count'>
+      <div id="summary" v-for='blog in data'>
+        <BlogSummary :data='blog'></BlogSummary>
       </div>
 
       <div id="PageTurning">
@@ -22,6 +18,9 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      啥都木有
+    </div>
   </div>
 </template>
 
@@ -36,8 +35,9 @@
     data:function(){
       return {
         data:{},
-        url:'/api/blog/select_blogs?blogs_type=',
-        blogs_type:this.$route.params.blogs_type,
+        url:'http://127.0.0.1:5000/api/blog/select_blogs?blog_type=',
+        blog_type:this.$route.params.blog_type,
+        blog_count:0,
         current_page:1,
         max_page:1,
         count: 2,
@@ -54,11 +54,17 @@
     },
     methods:{
       get_summary(current_page=1){
-        let url = this.$data.url + this.$route.params.blogs_type + '&begin=' + (current_page*5-5)
+        let url = this.$data.url + this.$route.params.blog_type + '&begin=' + (current_page*5-5)
         this.$axios.get(url).then((response)=>{
-          this.$data.data = response.data
-          this.$data.max_page = response.data[0].blog_count/5
-          this.$data.current_page = current_page;
+          // this.$data.data = response.data
+          // this.$data.max_page = response.data[0].blog_count/5
+          // this.$data.data.shift()
+          // 解构赋值拆分 返回文章的数量与内容
+          let count
+          [count,...this.$data.data] = response.data
+          this.$data.current_page = current_page
+          this.$data.blog_count = count.blog_count
+          this.$data.max_page = count.blog_count/5
       })
       },
     }

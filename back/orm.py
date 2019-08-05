@@ -21,21 +21,27 @@ class Mysql(object):
                                db=self.db, charset='utf8')
         return conn
 
-    def select_blogs(self, blogs_type, begin=0, count=5, sort_key='date'):
+    def select_blogs(self, type_list, begin=0, count=5, sort_key='date'):
         # todo 只选择一页的博客 博客条数另外写条查询语句
-        sql = "select * from blogs where blog_type='%s' order by date desc" % (
-            blogs_type)
-        if blogs_type == 'all':
+        more = ''
+        for blog_type in type_list:
+            more += "or blog_type='%s'" % blog_type
+        sql = "select id,title,blog_type,summary,date \
+        from blogs where blog_type='%s' %s order by date desc" % (
+            type_list[0], more)
+        if type_list[0] == 'all':
             sql = "select * from blogs order by date desc "
         # TODO: DictCursor 返回字典结构的代码 待优化
         cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         cursor.execute(sql)
         blogs = cursor.fetchall()
         blog_add = [{'blog_count': len(blogs)}]
+        if len(blogs) == 0:
+            # 未取到数据时 提前返回查询结果
+            return json.dumps(blog_add)
         blogs = blogs[begin:begin + count]
         for blog in blogs:
             blog['date'] = str(blog['date'])
-            blog['text'] = blog['text'][0:100]
         return json.dumps(blog_add + blogs)
 
     def select_blog_by_id(self, blog_id):
@@ -50,38 +56,53 @@ class Mysql(object):
         return json.dumps(blog)
 
     def new_blog(self, blog):
-        sql = "insert into blogs(title,blog_type,text,date) values \
-        ('%s','%s','%s','%s')" % (
-            blog['title'], blog['blog_type'],
-            blog['text'], '2019-07-31 19:13:00')
         cursor = self.conn.cursor()
-        cursor.execute(sql)
+        sql1 = "insert into blogs(title,blog_type,text,date) values \
+        ('%s','%s','%s', '%s')" % (
+            blog['title'], blog['blog_type'],
+            blog['text'], '2019-08-03 11:13:00')
+        sql2 = "select id from blogs order by id desc limit 1"
+        cursor.execute(sql2)
+        blog_id = cursor.fetchone()[0] + 1
+        sql3 = "create table if not exists comments_%s(\
+        `id` int unsigned auto_increment,\
+        `username` char(30) not null,\
+        `content` char(200) not null,\
+        `mailbox` char(50) not null,\
+        `date` timestamp null default current_timestamp,\
+        primary key(`id`)\
+        )engine=innodb default charset=utf8;" % blog_id
+
+        cursor.execute(sql1)
+        cursor.execute(sql3)
         self.conn.commit()
         cursor.close()
         return 1
 
-    def new_web_comment(self, username, content, mailbox):
-        sql = "insert into web_comments(username, content, mailbox) values \
+    def new_comment(self, table, username, content, mailbox):
+        sql = "insert into %s(username, content, mailbox) values \
         ('%s','%s','%s')" % (
-            username, content, mailbox)
+            table, username, content, mailbox)
         cursor = self.conn.cursor()
         row_affected = cursor.execute(sql)
         self.conn.commit()
         cursor.close()
         return row_affected
 
-    def select_web_comments(self, begin=0, limit=10):
+    def select_comments(self, table, begin=0, limit=10):
         cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
-        sql = "select count(*) from web_comments"
-        cursor.execute(sql)
-        count = cursor.fetchone()
-        sql = "select * from web_comments order by date desc \
-        limit %s,%s" % (begin, limit)
-        cursor.execute(sql)
-        web_comments = cursor.fetchall()
-        for comment in web_comments:
+        sql1 = "select count(*) from %s" % table
+        cursor.execute(sql1)
+        count = cursor.fetchone().get('count(*)')
+        if count == 0:
+            return json.dumps([{'count': count}])
+        sql2 = "select * from %s order by date desc \
+        limit %s,%s" % (table, begin, limit)
+        cursor.execute(sql2)
+        comments = cursor.fetchall()
+        for comment in comments:
             comment['date'] = str(comment['date'])
-        return json.dumps([{'count': count}] + web_comments)
+        return json.dumps([{'count': count}] + comments)
 
 
 def test():

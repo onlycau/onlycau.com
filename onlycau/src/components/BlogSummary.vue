@@ -6,7 +6,7 @@
         <span class='blog_title' @click="to_blog">{{data.title}}</span>
       </div>
       <div class='blog_text'>
-        <p>{{data.text}}</p>
+        <p>{{data.summary}}</p>
       </div>
       <div class='overview_bottom'>
         <span class='blog_author'>作者:{{data.author}}</span>
@@ -49,6 +49,7 @@
   font-size: 150%;
   color: green;
   padding-left: 30px;
+  cursor: pointer;
 }
 .blog_author{
   color: red;

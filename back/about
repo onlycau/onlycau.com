@@ -1,0 +1,35 @@
+文章摘要×n
+/api/blog/select_blogs
+get 所传参数名为blog_type 和 begin
+blog_type 可以写多个以，隔开
+begin int类型 从第几列选取（默认排序方式为时间倒序）
+默认返回一个json 6项列表 后5列为一个包含（id title text blog_type date sign)的字典 首列固定为{'blog_count':'count'} 无数据时只返回首列
+
+一篇博客
+/api/blog/select_blog
+get 传一个blog_id参数作为查询id
+返回json字典 包含(id titile text blog_type date sign)
+
+10条评论
+/api/comments
+get 
+参数 table begin
+返回一个最多为11项评论列表 首列固定{'count':'count'}  起始点为begin 排序方式为时间倒叙
+后10为一个包含(id username content date maibox)的字典
+to do 不返回maibox 列表为0时添加返回值
+
+新评论
+/api/new_comment
+get
+参数 username content maibox table
+table 网站留言为web_comments 文章留言为 comments_ + blog_id
+返回影响行数
+to do 添加失败处理
+
+新博客
+/api/blog.new
+post
+json 包含(title blog_type text)的字典
+返回post内容
+
+待更新
