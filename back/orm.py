@@ -35,7 +35,7 @@ class Mysql(object):
         cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         cursor.execute(sql)
         blogs = cursor.fetchall()
-        blog_add = [{'blog_count': len(blogs)}]
+        blog_add = [{'count': len(blogs)}]
         if len(blogs) == 0:
             # 未取到数据时 提前返回查询结果
             return json.dumps(blog_add)
@@ -57,13 +57,13 @@ class Mysql(object):
 
     def new_blog(self, blog):
         cursor = self.conn.cursor()
-        sql1 = "insert into blogs(title,blog_type,text,date) values \
-        ('%s','%s','%s', '%s')" % (
+        sql1 = "insert into blogs(title,blog_type,text,summary,date) values \
+        ('%s','%s','%s', '%s', '%s')" % (
             blog['title'], blog['blog_type'],
-            blog['text'], '2019-08-03 11:13:00')
+            blog['text'], blog['summary'], '2019-08-08 11:13:00')
         sql2 = "select id from blogs order by id desc limit 1"
         cursor.execute(sql2)
-        blog_id = cursor.fetchone()[0] + 1
+        blog_id = cursor.fetchone()[0]
         sql3 = "create table if not exists comments_%s(\
         `id` int unsigned auto_increment,\
         `username` char(30) not null,\
@@ -104,10 +104,29 @@ class Mysql(object):
             comment['date'] = str(comment['date'])
         return json.dumps([{'count': count}] + comments)
 
+    def check_name(self, name):
+        sql = "select count(*) from users where name='%s'" % name
+        cursor = self.conn.cursor()
+        cursor.execute(sql)
+        count = cursor.fetchone()
+        return json.dumps(count)
+
+    def sign_up(self, user):
+        sql = "insert into users (name,password,mailbox) values \
+        ('%s','%s','%s')" % (
+            user['name'], user['password'], user['mailbox'])
+        cursor = self.conn.cursor()
+        row_affected = cursor.execute(sql)
+        if row_affected == 1:
+            self.conn.commit()
+            cursor.close()
+            return row_affected
+        else:
+            return 0
+
 
 def test():
-    r = Mysql().select_web_comments()
-    print(r)
+    r = Mysql().check_name('hh')
 
 
 if __name__ == '__main__':

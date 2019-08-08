@@ -1,4 +1,4 @@
-<!-- to do 服务端添加密码验证 防止xss攻击 -->
+<!-- to do 服务端添加密码验证 防止xss攻击 双向绑定代替ref -->
 <template>
   <div id="new_blog">
     <h2>随便写写文章啦</h2>
@@ -8,7 +8,7 @@
 
     <div><editor ref='editor'></editor></div>
     <div>
-      文章摘要:<textarea id="new_blog_summary" v-model='blog_summary' name="content"  placeholder="大概写了啥..."></textarea>
+      文章摘要:<textarea id="new_blog_summary" v-model='summary' name="content"  placeholder="大概写了啥..."></textarea>
     </div>
     <div id="new_blog_tag">文章标签</div>
 
@@ -38,7 +38,7 @@ export default{
       new_blog_author:'onlycau',
       blog_types:['个人日记', '计划总结', 'HTML', 'JavaScript', 'Python', 'Others', '软件配置', '软件指令'],
       blog_type:'Others',
-      blog_summary:''
+      summary:''
     }
   },
   components:{
@@ -54,7 +54,7 @@ export default{
         'title': this.$refs.title_value.value,
         'blog_type': this.$data.blog_type,
         'text': this.$refs.editor.editorContent,
-        'blog_summary': this.$data.blog_summary,
+        'summary': this.$data.summary,
       }
       this.$axios.post(this.$data.url, data).then((response)=>{
         alert('ok')
@@ -66,6 +66,10 @@ export default{
 <style>
 #new_blog>div{
   margin:5px;
+}
+#new_blog input{
+  padding-left: 10px;
+  padding-right: 10px;
 }
 #new_blog_title{
   margin: 20px 5px 20px 0px;

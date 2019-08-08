@@ -1,7 +1,19 @@
 --  todo 
 --  数据库
+-- host = '%'
+-- user = 'web_user'
+-- password = '020202'
+-- db = 'web'
+--  用户表
+create table if not exists `users`(
+`id` int unsigned auto_increment,
+`name` char(20) not null,
+`password` char(20) not null,
+`mailbox` char(30) not null,
+`date` timestamp null default current_timestamp,
+primary key(`id`)
+)engine=innodb default charset=utf8;
 
---  表
 --  博客表
 create table if not exists `blogs`(
 `id` int unsigned auto_increment,
@@ -15,6 +27,7 @@ create table if not exists `blogs`(
 `views` int default 0,
 primary key(`id`)
 )engine=innodb default charset=utf8;
+
 --  评论表
 create table if not exists `web_comments`(
 `id` int unsigned auto_increment,

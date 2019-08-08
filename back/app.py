@@ -64,37 +64,32 @@ def select_comments():
     web_comments = Mysql().select_comments(table, begin)
     return web_comments
 
+
 # # 登录
-# @app.route('/sign_in/', methods=['GET', 'POST'])
-# def sign_in():
-#     if request.method == 'POST':
-#         user = request.form['name']
-#         password = request.form['password']
-#         status_code = Mysql().sign_in(user, password)
-#         if status_code == -1:
-#             return 'wrong username'
-#         if status_code == 0:
-#             return 'wrong password'
-#         if status_code == 1:
-#             session['logged'] = user
-#             return app.send_static_file('html/homepage.html')
-#     else:
-#         return app.send_static_file('html/sign_in.html')
+@app.route('/user/sign_in', methods=['GET', 'POST'])
+def sign_in():
+    if request.args.get('name'):
+        session['logged'] = request.args.get('name')
+        return session['logged']
+    else:
+        return '0'
 
 
-# # 注册
-# @app.route('/sign_up/', methods=['GET', 'POST'])
-# def sign_up():
-#     if request.args.get('name'):
-#         name = request.args.get('name')
-#         password = request.args.get('password')
-#         status_code = Mysql().sign_up(name, password)
-#         if status_code == 1:
-#             return '1'
-#         else:
-#             return '-1'
-#     else:
-#         return app.send_static_file('html/sign_up.html')
+# 注册
+@app.route('/user/sign_up', methods=['GET', 'POST'])
+def sign_up():
+    if request.method == 'GET':
+        if request.args.get('name'):
+            name = request.args.get('name')
+            count = Mysql().check_name(name)
+            return count
+    if request.method == 'POST':
+        user = request.get_json()
+        r = Mysql().sign_up(user)
+        if r == 1:
+            return '注册成功'
+        else:
+            return '注册失败'
 
 
 # # 退出

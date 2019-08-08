@@ -2,8 +2,8 @@
   <div v-if='data'>
      <div class='overview'>
       <div class='overview_top'>
-        <span class='blog_type'>{{data.blog_type}}</span>
-        <span class='blog_title' @click="to_blog">{{data.title}}</span>
+        <span class='blog_type' @click="to_blogs(data.blog_type)">{{data.blog_type}}</span>
+        <span class='blog_title' @click="to_blog()">{{data.title}}</span>
       </div>
       <div class='blog_text'>
         <p>{{data.summary}}</p>
@@ -17,18 +17,21 @@
 </template>
 
 <script>
-  export default{
-    name:'BlogSummary',
-    data:function(){
-      return {}
+export default{
+  name:'BlogSummary',
+  data:function(){
+    return {}
+  },
+  props:['data'],
+  methods:{
+    to_blogs(blog_type){
+      this.$router.replace('/blogs/'+blog_type)
     },
-    props:['data'],
-    methods:{
-      to_blog:function(){
-        this.$router.push('/blog/'+this.data.id)
-      }
+    to_blog:function(){
+      this.$router.push('/blog/'+this.data.id)
     }
   }
+}
 </script>
 
 <style type="text/css">
@@ -44,6 +47,7 @@
 }
 .blog_type{
   color: red;
+  cursor: pointer;
 }
 .blog_title{
   font-size: 150%;
