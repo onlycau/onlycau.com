@@ -1,6 +1,6 @@
 #!usr/bin/env python3
 # -*- coding: utf-8 -*-
-
+# to do sql语句采用参数方式代替拼接
 
 import pymysql
 import json
@@ -57,13 +57,13 @@ class Mysql(object):
 
     def new_blog(self, blog):
         cursor = self.conn.cursor()
-        sql1 = "insert into blogs(title,blog_type,text,summary,date) values \
-        ('%s','%s','%s', '%s', '%s')" % (
+        sql1 = "insert into blogs(title,blog_type,text,summary) values \
+        ('%s','%s','%s', '%s')" % (
             blog['title'], blog['blog_type'],
-            blog['text'], blog['summary'], '2019-08-08 11:13:00')
+            blog['text'], blog['summary'])
         sql2 = "select id from blogs order by id desc limit 1"
         cursor.execute(sql2)
-        blog_id = cursor.fetchone()[0]
+        blog_id = cursor.fetchone()[0] + 1
         sql3 = "create table if not exists comments_%s(\
         `id` int unsigned auto_increment,\
         `username` char(30) not null,\
@@ -124,9 +124,22 @@ class Mysql(object):
         else:
             return 0
 
+    def sign_in(self, user):
+        sql = "select password from users where name='%s'" % user.get('name')
+        cursor = self.conn.cursor()
+        cursor.execute(sql)
+        r = cursor.fetchone()
+        if r:
+            if r[0] == user.get('password'):
+                return 1
+            else:
+                return 0
+        else:
+            return -1
+
 
 def test():
-    r = Mysql().check_name('hh')
+    r = Mysql().sign_in({'name':'onlycu','password':'020202'})
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-<!-- to do 输入提示 请求加密 -->
+<!-- to do 输入提示 请求加密 登录提示-->
 <template>
   <div id="for_center">
     <div id="sign_in">
@@ -35,9 +35,22 @@ export default {
   },
   methods:{
     my_submit(){
-      const url = this.url + '?name=' + this.name + '&?password=' + this.password
-      this.$axios.get(url).then((response)=>{
-        alert(response.data)
+      const data = {
+        'name': this.name,
+        'password': this.password
+      }
+      alert('wait')
+      this.$axios.post(this.$data.url, data).then((response)=>{
+        if(response.data == 1){
+          this.$router.replace('/')
+        }
+        else if(response.data == -1){
+          alert('用户名或者密码错误')
+        }
+        else{
+          alert('某些奇怪的事发生了')
+          this.$router.go(0)
+        }
       })
     },
   }

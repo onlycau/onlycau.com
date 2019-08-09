@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from flask import Flask, render_template, request, session
+from flask import Flask, request, session
 from flask_cors import CORS
 
 from orm import Mysql
@@ -65,17 +65,8 @@ def select_comments():
     return web_comments
 
 
-# # 登录
-@app.route('/user/sign_in', methods=['GET', 'POST'])
-def sign_in():
-    if request.args.get('name'):
-        session['logged'] = request.args.get('name')
-        return session['logged']
-    else:
-        return '0'
-
-
 # 注册
+# 注意 fals直接返回字符串时 实际客户端接收到的是字符串内包裹的内容
 @app.route('/user/sign_up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'GET':
@@ -87,9 +78,33 @@ def sign_up():
         user = request.get_json()
         r = Mysql().sign_up(user)
         if r == 1:
-            return '注册成功'
+            return '1'
         else:
-            return '注册失败'
+            return '0'
+
+
+# # 登录 跨域时cookie处理有变化 暂时无效
+@app.route('/user/sign_in', methods=['POST'])
+def sign_in():
+    session['logged'] = True
+    user = request.get_json()
+    if user:
+        r = Mysql().sign_in(user)
+        if r == 1:
+            session['logged'] = user['name']
+            return '1'
+        else:
+            return '0'
+    else:
+        return '-1'
+
+
+@app.route('/user/is_logged')
+def is_logged():
+    if 'logged' in session:
+        return {'name': session['logged'], 'logged': 1}
+    else:
+        return {'name': 'onlycau', 'logged': 1}
 
 
 # # 退出

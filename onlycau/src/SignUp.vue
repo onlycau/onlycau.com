@@ -1,5 +1,6 @@
 <!--  !!!需要绑定的样式一定要提前理一遍 哪些样式与这属性有关 别后面再一个一个添加属性
-      to do 1单个输入选项构建一个组件 传入属性和文本 2登录注册信息加密 3 属性绑定优化 -->
+      to do 1单个输入选项构建一个组件 传入属性和文本 2登录注册信息加密 3 属性绑定优化 
+      4 this.wait 添加注册请求时候的等待图标-->
 <template>
   <div id="for_center">
     <div id="sign_up">
@@ -165,6 +166,9 @@ export default{
           if (response.data[0] == 0){
             this.name_d = true
           }
+          else{
+            this.name_d = false
+          }
         })
       }
       else{
@@ -177,11 +181,16 @@ export default{
         'password':this.password,
         'mailbox':this.mailbox,
       }
-      alert('waiting')
       this.wait = true
       this.$axios.post(this.url, user).then((response)=>{
-        alert(response.data)
-        this.wait = false
+        if (response.data == 1){
+          this.wait = false
+          alert('注册成功')
+          this.$router.replace('/user/sign_in')
+        }
+        else{
+          alert('某些意外的情况发生了')
+        }
         })
     }
   },

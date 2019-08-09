@@ -50,7 +50,7 @@ export default{
     },
     // todo 输入检查
     post(){
-      var data={
+      let data={
         'title': this.$refs.title_value.value,
         'blog_type': this.$data.blog_type,
         'text': this.$refs.editor.editorContent,
@@ -58,6 +58,7 @@ export default{
       }
       this.$axios.post(this.$data.url, data).then((response)=>{
         alert('ok')
+        this.$router.replace('/blogs/all')
         })
     }
   }
