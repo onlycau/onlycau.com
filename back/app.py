@@ -8,7 +8,7 @@ from flask_cors import CORS
 from orm import Mysql
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static/')
 app.config['SECRET_KEY'] = 'xxxxxx'
 
 
@@ -35,7 +35,6 @@ def select_blogs():
 def select_blog():
     blog_id = request.args.get('blog_id')
     blog = Mysql().select_blog_by_id(blog_id)
-    print(blog)
     return blog
 
 
@@ -45,6 +44,19 @@ def new_blog():
     if blog:
         Mysql().new_blog(blog)
     return blog
+
+
+@app.route('/api/blog/edite', methods=['POST'])
+def edite_blog():
+    blog = request.get_json()
+    if blog.get('password') == '1961':
+        r = Mysql().edite_blog(blog)
+        if r == 1:
+            return '1'
+        else:
+            return '-1'
+    else:
+        return '0'
 
 
 @app.route('/api/new_comment')
@@ -104,27 +116,22 @@ def is_logged():
     if 'logged' in session:
         return {'name': session['logged'], 'logged': 1}
     else:
-        return {'name': 'onlycau', 'logged': 1}
+        return {'name': 'onlycau', 'logged': 0}
 
 
-# # 退出
-# @app.route('/sign_out/')
-# def sign_out():
-#     if session.get('logged'):
-#         session.pop('logged')
-#         session.clear
-#         return app.send_static_file('html/homepage.html')
-#     else:
-#         return '退出失败'
+@app.route('/user/sign_out/')
+def sign_out():
+    if session.get('logged'):
+        session.pop('logged')
+        session.clear
+        return '1'
+    else:
+        return '1'
 
 
-# # 是否登录判断 客户端每次访问时会额外请求一次 获取登录状态
-# @app.route('/has_sign_in/')
-# def has_sign_in():
-#     if session.get('logged'):
-#         return session['logged']
-#     else:
-#         return '-1'
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 
 if __name__ == '__main__':

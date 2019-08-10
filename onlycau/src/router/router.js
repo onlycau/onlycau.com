@@ -5,6 +5,7 @@ import VueRouter from "vue-router";
 import homepage from "../homepage.vue"
 import blog from "../blog.vue"
 import new_blog from "../new_blog.vue"
+import edite_blog from "../edite_blog.vue"
 import message from "../message.vue"
 import SignIn from "../SignIn.vue"
 import SignUp from "../SignUp.vue"
@@ -23,6 +24,10 @@ const routes = [
     {
       path:"/new_blog",
       component:new_blog
+    },
+    {
+      path:"/edite_blog/:blog_id",
+      component:edite_blog
     },
     {
       path:"/message",

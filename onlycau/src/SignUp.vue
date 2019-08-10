@@ -87,7 +87,7 @@ export default{
   name:'SignUp',
   data:function(){
     return {
-      url:'http://127.0.0.1:5000/user/sign_up',
+      url:this.$Global.url + '/user/sign_up',
       name:'',
       on_name:-1,
       name_d:false,

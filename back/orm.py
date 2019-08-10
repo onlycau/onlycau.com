@@ -79,6 +79,19 @@ class Mysql(object):
         cursor.close()
         return 1
 
+    def edite_blog(self, blog):
+        cursor = self.conn.cursor()
+        sql1 = "update blogs set title='%s', blog_type='%s',\
+        text='%s',summary='%s' where id=%s" % (
+            blog['title'], blog['blog_type'],
+            blog['text'], blog['summary'], blog['blog_id'])
+        if cursor.execute(sql1) == 1:
+            self.conn.commit()
+            cursor.close()
+            return 1
+        else:
+            return 0
+
     def new_comment(self, table, username, content, mailbox):
         sql = "insert into %s(username, content, mailbox) values \
         ('%s','%s','%s')" % (

@@ -11,7 +11,8 @@
       name: 'editor',
       data () {
         return {
-          editorContent: ''
+          editorContent: '',
+          editor:'',
         }
       },
       methods: {
@@ -20,11 +21,11 @@
         }
       },
       mounted() {
-        var editor = new E(this.$refs.editor)
-        editor.customConfig.onchange = (html) => {
+        this.editor = new E(this.$refs.editor)
+        this.editor.customConfig.onchange = (html) => {
           this.editorContent = html
         }
-        editor.create()
+        this.editor.create()
       }
     }
 </script>

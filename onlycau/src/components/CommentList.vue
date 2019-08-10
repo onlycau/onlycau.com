@@ -22,7 +22,7 @@ export default{
   data:function(){
     return {
       comments:{},
-      url:'http://127.0.0.1:5000/api/comments?begin=',
+      url: this.$Global.url + '/api/comments?begin=',
       begin: 0,
       comments_count: 0,
       current_page: 1,
@@ -64,6 +64,7 @@ export default{
 #comment_page_turning > span{
   margin-left: 5px;
   margin-right: 5px;
+  cursor: pointer;
 }
 #comment_page_turning > span:hover{
   background-color: green;

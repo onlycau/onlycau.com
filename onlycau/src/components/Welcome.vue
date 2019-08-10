@@ -4,7 +4,7 @@
     <div id="is_logged">
       <div v-if='logged'>
         <span id="sign_in" @click="to_('sign_in')">{{name}}</span>
-        <span id="sign_up" @click="to_('sign_out')">退出</span>
+        <span id="sign_up" @click="sign_out()">退出</span>
       </div>
       <div v-else>
         <span @click="to_('sign_in')">登录</span>
@@ -33,7 +33,7 @@ export default{
   },
   methods:{
     is_logged(){
-      const url = 'http://127.0.0.1:5000/user/is_logged'
+      const url = this.$Global.url + '/user/is_logged'
       this.$axios.get(url).then((response)=>{
         if (response.data.logged === 1){
           this.name = response.data.name
@@ -46,6 +46,14 @@ export default{
     },
     to_(url){
       this.$router.push('/user/' + url)
+    },
+    sign_out(){
+      const url = this.$Global.url + '/user/sign_out'
+      this.$axios.get(url).then((response)=>{
+        if(response.data == 1){
+          this.$router.go(0)
+        }
+      })
     }
   }
 }

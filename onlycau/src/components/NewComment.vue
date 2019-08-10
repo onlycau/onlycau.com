@@ -1,9 +1,10 @@
+<!-- to do 改变留言后反馈 -->
 <template>
   <div id="new_comment">
     <div>
       给我留言
     </div>
-    <form action="http://127.0.0.1:5000/api/new_comment" method="get">
+    <form :action='url' method="get">
       <textarea id="comment_content" name="content" placeholder="写点什么..." /><br>
       <input id="comment_name" type="text" name="username" placeholder="昵称" /><br>
       <input id="comment_name" type="text" name="mailbox" placeholder="邮箱" /><br>
@@ -15,6 +16,11 @@
 <script>
 export default{
   name:'NewComment',
+  data:function(){
+    return {
+      url:this.$Global.url + '/api/new_comment'
+    }
+  },
   props:['table']
 }
 </script>

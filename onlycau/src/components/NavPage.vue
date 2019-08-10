@@ -32,7 +32,7 @@ export default{
   data:function(){
     return {
       data:{},
-      url:'http://127.0.0.1:5000/api/blog/select_blogs?blog_type=',
+      url: this.$Global.url + '/api/blog/select_blogs?blog_type=',
       blog_type:this.$route.params.blog_type,
       begin: 0,
       blogs_count: 0,
@@ -87,6 +87,7 @@ export default{
 #blogs_page_turning > span{
   margin-left: 5px;
   margin-right: 5px;
+  cursor: pointer;
 }
 #blogs_page_turning > span:hover{
   background-color: red;
