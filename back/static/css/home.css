@@ -1,0 +1,99 @@
+body{
+  margin: 0;
+}
+#home{
+  position: relative;
+  top:0;
+  left:0;
+}
+#home > div{
+  height: 100vh;
+  width: 100vw;
+}
+#page_1{
+  overflow: hidden;
+  background-color: blue;
+  position: absolute;
+  z-index: -10;
+}
+#page_2{
+  background-color: orange;
+  position: absolute;
+  z-index: -20;
+}
+#page_3{
+  background-color: yellow;
+  position: absolute;
+  z-index: -30
+}
+#page_4{
+  background-color: green;
+  position: absolute;
+  z-index: -40;
+}
+#carousel > div{
+  position: absolute;
+  height: 80vh;
+  width: 100vw;
+  background-size: 100% 100%;
+}
+.content{
+  text-align: center;
+  top: 18vh;
+  position: absolute;
+  color: black;
+  z-index: 1;
+}
+.title{
+  margin-bottom: 10px;
+}
+.title span{
+  color: white;
+  font-size: 250%;
+  border-top-style: solid;
+  border-bottom-style: solid;
+}
+.button{
+  margin-top: 30px;
+}
+.button span{
+  font-size: 150%;
+  padding: 10px 20px 10px 20px;
+  margin: 30px 20px 10px 20px;
+  cursor: pointer;
+}
+.button a{
+  color: white;
+  text-decoration-line: none;
+}
+.button_1{
+  background-color:#E96656;
+}
+.button_2{
+  background-color:#20AA73;
+}
+#carousel_1{
+  background:url('/static/img/1.png');
+}
+#carousel_2{
+  background:url('/static/img/2.png');
+}
+#carousel_3{
+  background:url('/static/img/3.png');
+}
+#carousel_4{
+  background:url('/static/img/4.jpeg');
+}
+#note{
+  top: 80vh;
+  height: 20vh;
+  width: 100vw;
+  background-color: white;
+  position: absolute;
+  text-align: center;
+}
+#note div{
+  margin-top: 10vh;
+  text-align: center;
+  font-size: 110%;
+}

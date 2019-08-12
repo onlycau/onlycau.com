@@ -6,9 +6,9 @@ from flask import Flask, request, session
 from flask_cors import CORS
 
 from orm import Mysql
+import json
 
-
-app = Flask(__name__, static_folder='static/')
+app = Flask(__name__)
 app.config['SECRET_KEY'] = 'xxxxxx'
 
 
@@ -114,9 +114,9 @@ def sign_in():
 @app.route('/user/is_logged')
 def is_logged():
     if 'logged' in session:
-        return {'name': session['logged'], 'logged': 1}
+        return json.dumps({'name': session['logged'], 'logged': 1})
     else:
-        return {'name': 'onlycau', 'logged': 0}
+        return json.dumps({'name': 'onlycau', 'logged': 0})
 
 
 @app.route('/user/sign_out/')
@@ -132,6 +132,11 @@ def sign_out():
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
+
+@app.route('/home')
+def home():
+    return app.send_static_file('home.html')
 
 
 if __name__ == '__main__':
