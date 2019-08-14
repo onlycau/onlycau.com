@@ -40,7 +40,7 @@ function carousel(){
 window.onload = function(){
   carousel()
 }
-//竖直滚动 to do 写好看点 节流更换更优秀方式
+//竖直滚动 to do 增加可读性 节流更换更优秀方式
 let current_page = 1
 var ok = true
 
@@ -76,7 +76,7 @@ window.onwheel = function(){
     var e = e || window.event
     timer = setTimeout(function() {
       ok = true
-    },400)
+    },600)
     if(ok){
       if((e.deltaY > 50) && (current_page < 4)){
         down('page_' + current_page)
