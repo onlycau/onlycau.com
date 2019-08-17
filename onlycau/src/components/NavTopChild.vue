@@ -1,10 +1,9 @@
 <template>
-  <div  @mouseover='show()'@mouseout='hide()' class="hi">
-    <div @click="to_url(sth.url)">{{sth.name}}
-    </div>
-    <div v-show='isShow' class="dropdown">
-      <div v-for='blog_type in sth.types' class="drop_content" @click="to_blogs(blog_type)">{{blog_type}}</div>
-    </div>
+  <div class="hi" @mouseout='change(1)'>
+      <div @mouseover='change(-1)' @click="to_url(sth.url)">{{sth.name}} </div>
+      <div class="dropdown" :style="{transform:transform}">
+        <div v-for='blog_type in sth.types' class="drop_content" @click="to_blogs(blog_type)">{{blog_type}}</div>
+      </div>
   </div>
 </template>
 <script>
@@ -12,16 +11,29 @@ export default{
   name:'NavTopChild',
   data(){
     return{
-      isShow:false,
+      isShow:true,
+      degree:90,
+      timeoutId:0,
+    }
+  },
+  computed:{
+    transform:function(){
+      return 'rotateY(' + this.degree + 'deg)'
     }
   },
   props:['sth'],
   methods:{
-    show(){
-      this.$data.isShow=true
-    },
-    hide(){
-      this.$data.isShow=false
+    change(key){
+      if(this.timeoutId){
+        clearInterval(this.timeoutId)
+      }
+      this.timeoutId = setInterval(()=>{
+        this.degree += key
+        if(this.degree % 90 === 0){
+          clearInterval(this.timeoutId)
+          this.timeoutId = 0
+        }
+      },10)
     },
     to_url(url){
       this.$router.push('/' + url)
@@ -49,6 +61,7 @@ export default{
   background-color: #D1BA74;
 }
 .dropdown {
+  transform:rotateY(90deg);
   position: absolute;
   text-align: left;
   width: 100px;

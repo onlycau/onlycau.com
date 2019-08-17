@@ -21,7 +21,7 @@ export default{
   data(){
     return {
       one:{
-        url:'home',
+        url:'blogs/all',
         name:'首页',
         types:[],
       },

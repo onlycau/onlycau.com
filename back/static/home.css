@@ -1,3 +1,12 @@
+示例 onlycau.com/home
+
+图片轮播
+思路
+页面分层(z-index ，绝对定位 )
+最上层页面某个方向移动(更改位移值，定时器控制速度) ,显示下一层 直到最底层
+第一层回来(更改偏移位置 从另一个方向回来)  完成一遍循环
+ 重置底层页面位置 继续下次循环
+ js代码
 //轮播图 to do 失焦停止轮换 程序改进 增加可读性 添加点击切换图片按钮
 let current_img = 4
 function carousel(){
@@ -40,6 +49,16 @@ function carousel(){
 window.onload = function(){
   carousel()
 }
+todo 
+
+失焦停止轮换 
+程序改进 增加可读性
+ 添加点击切换图片按钮
+页面滚动
+思路
+页面分层(z-index 绝对定位)
+接收滚轮事件（防抖 节流）
+页面平移 显示下或上一页面(是否触底，是否滚动中)
 //竖直滚动 to do 增加可读性 节流更换更优秀方式
 let current_page = 1
 var ok = true
@@ -88,3 +107,7 @@ window.onwheel = function(){
       }
     }
 }
+to do
+
+优化节流方式(添加标记变量决定是否触发滚动)
+注释 命令 增加可读性

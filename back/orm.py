@@ -60,7 +60,7 @@ class Mysql(object):
         sql1 = "insert into blogs(title,blog_type,text,summary) values \
         ('%s','%s','%s', '%s')" % (
             blog['title'], blog['blog_type'],
-            blog['text'], blog['summary'])
+            pymysql.escape_string(blog['text']), blog['summary'])
         sql2 = "select id from blogs order by id desc limit 1"
         cursor.execute(sql2)
         blog_id = cursor.fetchone()[0] + 1
