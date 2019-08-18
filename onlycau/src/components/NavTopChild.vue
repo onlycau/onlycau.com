@@ -1,8 +1,10 @@
 <template>
-  <div class="hi" @mouseout='change(1)'>
-      <div @mouseover='change(-1)' @click="to_url(sth.url)">{{sth.name}} </div>
-      <div class="dropdown" :style="{transform:transform}">
-        <div v-for='blog_type in sth.types' class="drop_content" @click="to_blogs(blog_type)">{{blog_type}}</div>
+  <div class="navtop_child" :class="{on:on}" @mouseenter='show()' @mouseleave='hide()'>
+      <div @click="to_url(sth.url)">{{sth.name}} </div>
+      <div class="dropdown">
+        <div v-for='(blog_type,index) in sth.types' :key='index' class="drop_content" :class="blog_type" @click="to_blogs(blog_type)">
+          {{blog_type}}
+        </div>
       </div>
   </div>
 </template>
@@ -11,9 +13,9 @@ export default{
   name:'NavTopChild',
   data(){
     return{
-      isShow:true,
-      degree:90,
-      timeoutId:0,
+      on:false,
+      on_show:false,
+      on_hide:false,
     }
   },
   computed:{
@@ -23,17 +25,65 @@ export default{
   },
   props:['sth'],
   methods:{
-    change(key){
-      if(this.timeoutId){
-        clearInterval(this.timeoutId)
+    show(n){
+      this.on = true
+      if(this.sth.types.length<2){
+        return
       }
-      this.timeoutId = setInterval(()=>{
-        this.degree += key
-        if(this.degree % 90 === 0){
-          clearInterval(this.timeoutId)
-          this.timeoutId = 0
-        }
-      },10)
+      this.on_hide = false
+      this.on_show = true
+      setTimeout(()=>{
+        let begin = 0
+        let timeoutId_total = setInterval(()=>{
+          let ele = document.getElementsByClassName(this.sth.types[begin])[0]
+          let degree = 90
+          // 元素未完全翻转时 获取其角度值
+          if(ele.style.transform){
+            degree = parseInt(/\d{1,2}/.exec(ele.style.transform)[0])
+          }
+          let timeoutId_one = setInterval(()=>{
+            degree -= 1
+            ele.style.transform = 'rotateY(' + degree + 'deg)'
+            if(this.on_hide||(degree%90===0)){
+              clearInterval(timeoutId_one)
+            }
+          },10)
+          begin+=1
+          if(this.on_hide||begin>this.sth.types.length-1){
+            clearInterval(timeoutId_total)
+          }
+        },100)
+      },100)
+    },
+    hide(n){
+      this.on = false
+      if(this.sth.types.length<2){
+        return
+      }
+      this.on_show = false
+      this.on_hide = true
+      setTimeout(()=>{
+        let begin = this.sth.types.length-1
+        let timeoutId_total = setInterval(()=>{
+          let ele = document.getElementsByClassName(this.sth.types[begin])[0]
+          let degree = 0
+          // 元素未完全翻转时 获取其角度值
+          if(ele.style.transform){
+            degree = parseInt(/\d{1,2}/.exec(ele.style.transform)[0])
+          }
+          let timeoutId_one = setInterval(()=>{
+            degree += 1
+            ele.style.transform = 'rotateY(' + degree + 'deg)'
+            if(this.on_show||(degree%90===0)){
+              clearInterval(timeoutId_one)
+            }
+          },10)
+          begin-=1
+          if(this.on_show||begin<0){
+            clearInterval(timeoutId_total)
+          }
+        },100)
+      },100)
     },
     to_url(url){
       this.$router.push('/' + url)
@@ -45,28 +95,35 @@ export default{
 }
 </script>
 
-<style type="text/css">
-.hi{
+<style scoped>
+.navtop_child{
   margin: 0px;
   padding-left: 0px;
-  background-color: #C8C8A9;
   display: inline-block;
   font-size: 150%;
   text-align: center;
   width: 130px;
-  z-index: -1;
   cursor: pointer;
 }
-.hi:hover{
-  background-color: #D1BA74;
-}
 .dropdown {
-  transform:rotateY(90deg);
+  width: 130px;
+  margin: 0;
   position: absolute;
+  z-index: 1;
   text-align: left;
-  width: 100px;
+}
+.drop_content{
+  line-height: 36px;
+  height: 36px;
+  transform:rotateY(90deg);
   padding-left: 15px;
   padding-right: 15px;
+  background-color: #C8C8A9;
+}
+.drop_content:hover{
+  background-color: #D1BA74;
+}
+.on{
   background-color: #D1BA74;
 }
 </style>
