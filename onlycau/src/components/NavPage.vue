@@ -62,7 +62,7 @@ export default{
       this.select_blogs(this.$data.current_page * 5)
     },
     select_blogs(begin){
-      let url = this.$data.url + this.$route.params.blog_type + '&begin=' + (this.$data.current_page*5-5)
+      let url = this.$data.url + (this.$route.params.blog_type?this.$route.params.blog_type:'all') + '&begin=' + (this.$data.current_page*5-5)
       this.$axios.get(url).then((response)=>{
         // this.$data.data = response.data
         // this.$data.max_page = response.data[0].blog_count/5

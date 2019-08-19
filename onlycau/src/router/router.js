@@ -2,20 +2,25 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 // 引入组件
-import homepage from "../homepage.vue"
-import blog from "../blog.vue"
-import new_blog from "../new_blog.vue"
-import edite_blog from "../edite_blog.vue"
-import message from "../message.vue"
-import SignIn from "../SignIn.vue"
-import SignUp from "../SignUp.vue"
+import home from "../view/home.vue"
+import blogs from "../view/blogs.vue"
+import blog from "../view/blog.vue"
+import new_blog from "../view/new_blog.vue"
+import edite_blog from "../view/edite_blog.vue"
+import message from "../view/message.vue"
+import SignIn from "../view/SignIn.vue"
+import SignUp from "../view/SignUp.vue"
 // 要告诉 vue 使用 vueRouter
 Vue.use(VueRouter);
 
 const routes = [
     {
+      path:"/home",
+      component:home,
+    },
+    {
       path:"/blogs/:blog_type",
-      component:homepage
+      component:blogs
     },
     {
       path:"/blog/:blog_id",

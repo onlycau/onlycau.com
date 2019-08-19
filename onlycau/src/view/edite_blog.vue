@@ -1,9 +1,9 @@
 <!-- to do 服务端添加密码验证 防止xss攻击 双向绑定代替ref -->
 <template>
   <div id="new_blog">
-    <h2>随便写写文章啦</h2>
+    <h2>随便改改文章啦</h2>
     <div  id="new_blog_title">
-      <input ref='title_value' placeholder="输入文章标题" maxlength="50">
+      <input v-model='title' placeholder="输入文章标题" maxlength="50">
     </div>
 
     <div><editor ref='editor'></editor></div>
@@ -21,46 +21,74 @@
     <div id="new_blog_author">
       文章作者:<span id="author_onlycau">{{new_blog_author}}</span>
     </div>
+      <div>输入权限码<input v-model='password'></div>
     <div id="post_blog">
-      <span @click='post()'>发布</span>
+      <span @click='post()'>修改</span>
+      <span @click='delete_blog()'>删除</span>
     </div>
   </div>
 </template>
 
 <script>
-import editor from './components/editor.vue'
+import editor from '../components/editor.vue'
 
 export default{
-  name:'new_blog',
+  name:'edite_blog',
   data:function(){
     return{
-      url: this.$Global.url + '/api/blog/new',
+      url: this.$Global.url + '/api/blog/edite',
+      blog_id :this.$route.params.blog_id,
+      title:'',
       new_blog_author:'onlycau',
       blog_types:['个人日记', '计划总结', 'HTML', 'JavaScript', 'Python', 'Others', '软件配置', '软件指令'],
       blog_type:'Others',
-      summary:''
+      summary:'',
+      password:'',
     }
+  },
+  mounted(){
+    this.get_blog(this.blog_id)
   },
   components:{
     editor,
   },
   methods:{
+    get_blog(id){
+      const url = this.$Global.url + '/api/blog/select_blog?blog_id=' + id
+      this.$axios.get(url).then((response)=>{
+        this.title = response.data.title
+        this.$refs.editor.editor.txt.html(response.data.text)
+        this.$refs.editor.editorContent = response.data.text
+        this.blog_type = response.data.blog_type
+        this.summary = response.data.summary
+      })
+    },
     change_type(blog_type){
       this.$data.blog_type = blog_type
     },
     // todo 输入检查
     post(){
+      const url = this.url
       let data={
-        'title': this.$refs.title_value.value,
-        'blog_type': this.$data.blog_type,
+        'blog_id':this.blog_id,
+        'title': this.title,
+        'blog_type': this.blog_type,
         'text': this.$refs.editor.editorContent,
-        'summary': this.$data.summary,
+        'summary': this.summary,
+        'password':this.password,
       }
-      this.$axios.post(this.$data.url, data).then((response)=>{
-        alert('ok')
-        this.$router.replace('/blogs/all')
+      this.$axios.post(url, data).then((response)=>{
+        if(response.data == 1){
+          this.$router.replace('/blog/' + this.blog_id)
+        }
+        else if (response.data ==0){
+          alert('错误权限码')
+        }
+        else{
+          alert('一些奇怪的事发生了')
+        }
         })
-    }
+    },
   }
 }
 </script>
@@ -98,6 +126,13 @@ export default{
 #post_blog{
   font-size: 140%;
   text-align: center;
+}
+#post_blog > span{
+  margin-left: 10px;
+  cursor: pointer;
+}
+#post_blog > span:hover{
+  color: red;
 }
 #new_blog_summary{
   width: 100%;

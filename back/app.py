@@ -20,11 +20,7 @@ def select_blogs():
 
     if request.args.get('blog_type'):
         bh = request.args.get('blog_type')
-        if len(bh) > 11:
-            blog_type = bh.split(',')
-        else:
-            blog_type = []
-            blog_type.append(bh)
+        blog_type = bh.split(',')
     if request.args.get('begin'):
         begin = int(request.args.get('begin'))
     blogs = Mysql().select_blogs(blog_type, begin)
@@ -43,7 +39,7 @@ def new_blog():
     blog = request.get_json()
     if blog:
         Mysql().new_blog(blog)
-    return blog
+    return "nice"
 
 
 @app.route('/api/blog/edite', methods=['POST'])

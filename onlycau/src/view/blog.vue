@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import NavTop from './components/NavTop.vue'
-import Blog from './components/Blog.vue'
+import NavTop from '../components/NavTop.vue'
+import Blog from '../components/Blog.vue'
 
 export default{
   name:'blog',

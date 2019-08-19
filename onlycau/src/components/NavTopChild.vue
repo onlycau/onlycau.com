@@ -1,7 +1,7 @@
 <template>
   <div class="navtop_child" :class="{on:on}" @mouseenter='show()' @mouseleave='hide()'>
       <div @click="to_url(sth.url)">{{sth.name}} </div>
-      <div class="dropdown">
+      <div class="dropdown" v-show='show_dropdown'>
         <div v-for='(blog_type,index) in sth.types' :key='index' class="drop_content" :class="blog_type" @click="to_blogs(blog_type)">
           {{blog_type}}
         </div>
@@ -16,6 +16,7 @@ export default{
       on:false,
       on_show:false,
       on_hide:false,
+      show_dropdown:false,
     }
   },
   computed:{
@@ -30,6 +31,8 @@ export default{
       if(this.sth.types.length<2){
         return
       }
+      // 显示下拉元素
+      this.show_dropdown = true
       this.on_hide = false
       this.on_show = true
       setTimeout(()=>{
@@ -65,6 +68,8 @@ export default{
       setTimeout(()=>{
         let begin = this.sth.types.length-1
         let timeoutId_total = setInterval(()=>{
+          // 记录下拉菜单消失到第几个了(外部定时机结束时begin已为-1，)
+          let key_show_dropdown = begin
           let ele = document.getElementsByClassName(this.sth.types[begin])[0]
           let degree = 0
           // 元素未完全翻转时 获取其角度值
@@ -76,6 +81,9 @@ export default{
             ele.style.transform = 'rotateY(' + degree + 'deg)'
             if(this.on_show||(degree%90===0)){
               clearInterval(timeoutId_one)
+              if(this.show_dropdown&&!key_show_dropdown&&degree===90){
+                this.show_dropdown = false
+              }
             }
           },10)
           begin-=1

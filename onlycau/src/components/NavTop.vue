@@ -21,12 +21,12 @@ export default{
   data(){
     return {
       one:{
-        url:'blogs/all',
+        url:'home',
         name:'首页',
         types:[],
       },
       two:{
-        url:'blogs/all',
+        url:"blogs/个人日记,计划总结",
         name:'生活随笔',
         types:['个人日记', '计划总结']
       },
@@ -41,7 +41,7 @@ export default{
         types:[],
       },
       five:{
-        url:'blogs/all',
+        url:'blogs/软件配置,软件指令',
         name:'备忘录',
         types:['软件配置','软件指令']
       },

@@ -5,8 +5,8 @@
   </div>
 </template>
 <script>
-import NewComment from './components/NewComment.vue'
-import CommentList from './components/CommentList'
+import NewComment from '../components/NewComment.vue'
+import CommentList from '../components/CommentList'
 
 export default{
   name:'message',

@@ -1,5 +1,5 @@
 <template>
-    <div id="homepage">
+    <div id="blogs">
       <NavPage></NavPage>
     </div>
 </template>
@@ -9,7 +9,7 @@
 import NavPage from './components/NavPage.vue'
 
 export default {
-  name: 'App',
+  name: 'blogs',
   components: {
     NavPage,
   }
