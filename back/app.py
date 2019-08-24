@@ -8,7 +8,7 @@ from flask_cors import CORS
 from orm import Mysql
 import json
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static/')
 app.config['SECRET_KEY'] = 'xxxxxx'
 
 
@@ -132,7 +132,7 @@ def index():
 
 @app.route('/home')
 def home():
-    return app.send_static_file('home.html')
+    return app.send_static_file('static/home.html')
 
 
 if __name__ == '__main__':
