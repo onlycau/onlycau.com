@@ -1,3 +1,8 @@
+<!-- to do 
+    1.暂停功能
+    2.修改图片滚动速度 尝试定长变换 而不是固定角度变换
+    3.添加阴影 
+-->
 <template>
   <div class="carousel">
     <div class="carousel_left">
@@ -73,7 +78,7 @@ export default{
         else{
           this.rotate_x(ele_hide, ele_show, Math.random()>0.5)
         }
-        // to do 暂停功能待完善
+        // to do 1 暂停功能待完善
         if(document.visibilityState == 'hidden'){
           this.pause = true
         }
