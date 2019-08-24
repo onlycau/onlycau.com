@@ -26,39 +26,28 @@ export default{
   data(){
     return{
       current_img:0,
-      timeoutId:0,
-      pause:false,
+      timeoutId:1,
     }
   },
   mounted(){
     this.carousel()
   },
-  watch:{
-    pause(val){
-      if(this.pause){
-        clearInterval(this.timeoutId)
-      }
-      else{
-        this.carousel()
-      }
-    }
-  },
   methods:{
     carousel(){
       let contain_right = document.getElementsByClassName('contain_right')[0]
-      let contain_left = document.getElementsByClassName('contain_left')[0]
-      contain_right.getElementsByTagName('div')[(this.current_img)].style.transform = 'rotateX(0deg)'
+      let ele = document.getElementsByClassName('contain_left')[0]
       let top = 0
       // 定时移动焦点图片，到达列表尾翻页 位移图片
       this.timeoutId = setInterval(()=>{
         this.current_img = (this.current_img + 1)%5
-        let ele_hide = contain_right.getElementsByTagName('div')[(this.current_img + 4)%5]
-        let ele_show = contain_right.getElementsByTagName('div')[this.current_img]
+      let ele_hide = contain_right.getElementsByTagName('div')[(this.current_img + 4)%5]
+      let ele_show = contain_right.getElementsByTagName('div')[this.current_img]
+        //do sth
         if((this.current_img === 0) || (this.current_img === 4)){
           let key = (this.current_img === 0)? 3:-3
           let timeoutId = setInterval(()=>{
             top += key
-            contain_left.style.top = top + 'px'
+            ele.style.top = top + 'px'
             if(top < -78 || top > 0){
               clearInterval(timeoutId)
             }
@@ -66,22 +55,12 @@ export default{
         }
         // 不能直接引用变化的图片序号
         let i = this.current_img
-        // 随机选择翻转方向
-        if(Math.random()>0.5){
-          this.rotate_y(ele_hide, ele_show, Math.random()>0.5)
-        }
-        else{
-          this.rotate_x(ele_hide, ele_show, Math.random()>0.5)
-        }
-        // to do 暂停功能待完善
-        if(document.visibilityState == 'hidden'){
-          this.pause = true
-        }
+        this.rotate_x(ele_hide, ele_show, true)
       },5000)
     },
     rotate_y(ele_hide, ele_show, clockwise){
-      ele_hide.style.transformOrigin = (clockwise?'0%':'100%') + ' 0%'
-      ele_show.style.transformOrigin = (clockwise?'100%':'0%') + ' 0%'
+      ele_hide.style.transformOrigin = clockwise?'0%':'100%' + ' 0%'
+      ele_show.style.transformOrigin = clockwise?'100%':'0%' + ' 0%'
       let degree_hide = 0
       let degree_show = 0
       let timeoutId = setInterval(()=>{
@@ -95,8 +74,8 @@ export default{
       },16.7)
     },
     rotate_x(ele_hide, ele_show, clockwise){
-      ele_hide.style.transformOrigin = '0% ' + (clockwise?'0%':'100%')
-      ele_show.style.transformOrigin = '0% ' + (clockwise?'100%':'0%')
+      ele_hide.style.transformOrigin = '0% ' + clockwise?'0%':'100%'
+      ele_show.style.transformOrigin = '0% ' + clockwise?'100%':'0%'
       let degree_hide = 0
       let degree_show = 0
       let timeoutId = setInterval(()=>{

@@ -4,7 +4,7 @@
       <Carousel></Carousel>
       <NavPage></NavPage>
     </div>
-    <aside class="sidebar" v-show='screenWidth>700' @click='test()'>
+    <aside class="sidebar" v-show='screenWidth>1000' @click='test()'>
       to do
     </aside>
   </div>
@@ -41,7 +41,6 @@ export default{
               let that = this
               setTimeout(function () {
                   // that.screenWidth = that.$store.state.canvasWidth
-                  that.init()
                   that.timer = false
               }, 400)
           }
@@ -58,7 +57,8 @@ export default{
   width: 100%;
 }
 .sidebar{
+  margin-top: 5px;
   background-color: #A934A2;
-  width:3vw;
+  width:30vw;
 }
 </style>
