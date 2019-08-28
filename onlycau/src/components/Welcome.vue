@@ -63,6 +63,7 @@ export default{
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 5px;
+  background-color: #E1E1E1;
 }
 #is_logged{
   float: right;

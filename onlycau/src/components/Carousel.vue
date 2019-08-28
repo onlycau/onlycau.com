@@ -64,7 +64,7 @@ export default{
           let timeoutId = setInterval(()=>{
             top += key
             contain_left.style.top = top + 'px'
-            if(top < -78 || top > 0){
+            if(top < -96 || top > -1){
               clearInterval(timeoutId)
             }
           },16.7)
@@ -119,41 +119,41 @@ export default{
 </script>
 <style>
 .carousel{
-  height: 320px;
-  width: 100%;
+  height: 400px;
   display: -webkit-flex; /* Safari */
+  display: flex;
+  justify-content: space-between;
 }
 /* 轮播图左侧导航*/
 .carousel_left{
   overflow: hidden;
-  position: absolute;
-  height: 320px;
-  width: 160px;
-  margin: 5px 5px 0 5px;
+  flex:1;
+  height: 400px;
+  padding-right: 5px;
 }
 .contain_left{
-  position: absolute;
+  overflow: hidden;
+  position: relative;
 }
 .box_img{
   border-color: blue;
 }
 .carousel_left img{
   border-style: solid;
-  height: 70px;
-  width: 150px;
+  height: 91px;
+  width: 190px;
 }
 /*3D翻转*/
 .carousel_right{
-  margin: 5px 50px 5px 175px;
-  width: 100%;
-  height: 100%;
+  width: 800px;
+  height: 400px;
 }
 .contain_right div{
   transform: rotateX(90deg);
   position: absolute;
 }
 .carousel_right img{
-  height: 320px;
-  width: 600px;
+  height: 400px;
+  width: 800px;
 }
 </style>
