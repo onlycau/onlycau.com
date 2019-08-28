@@ -10,6 +10,7 @@ import edite_blog from "../view/edite_blog.vue"
 import message from "../view/message.vue"
 import SignIn from "../view/SignIn.vue"
 import SignUp from "../view/SignUp.vue"
+import author from "../view/author.vue"
 // 要告诉 vue 使用 vueRouter
 Vue.use(VueRouter);
 
@@ -46,10 +47,15 @@ const routes = [
       path:"/user/sign_up",
       component:SignUp
     },
+    {
+      path:'/author',
+      component:author
+    }
 
 ]
 
 var router =  new VueRouter({
+  mode:'history',
     routes
 })
 export default router;

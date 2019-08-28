@@ -43,7 +43,7 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 #blog_title_blog{
   font-size: 200%;
   text-align: center;

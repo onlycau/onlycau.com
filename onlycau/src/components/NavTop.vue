@@ -36,7 +36,7 @@ export default{
         types:['HTML', 'JavaScript', 'Python', 'Others'],
       },
       four:{
-        url:'blogs/all',
+        url:'author',
         name:'关于博主',
         types:[],
       },

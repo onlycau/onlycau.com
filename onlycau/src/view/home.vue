@@ -4,7 +4,7 @@
       <Carousel></Carousel>
       <NavPage></NavPage>
     </div>
-    <aside class="sidebar" v-show='screenWidth>1000' @click='test()'>
+    <aside class="sidebar" v-show='screenWidth>1100' @click='test()'>
       to do
     </aside>
   </div>
@@ -24,19 +24,23 @@ export default{
     }
   },
   mounted(){
-      const that = this
       window.onresize = ()=>{
           return (()=>{
               window.screenWidth = document.body.clientWidth
-              that.screenWidth = window.screenWidth
+              this.screenWidth = window.screenWidth
           })()
       }
   },
   watch: {
-// 找到的最早此文章来源https://www.cnblogs.com/erbingbing/p/6340930.html?utm_source=itdadao&utm_medium=referral
       screenWidth (val) {
           if (!this.timer) {
               this.screenWidth = val
+              let ele = document.getElementsByClassName('content')[0]
+              if(val < 1300){
+                ele.style.width = '800px'
+              }else{
+                ele.style.width = '1000px'
+              }
               this.timer = true
               let that = this
               setTimeout(function () {
@@ -52,13 +56,14 @@ export default{
 #home{
   display: -webkit-flex; /* Safari */
   display: flex;
+  justify-content: center;
 }
 .content{
-  width: 100%;
+  width: 1000px;
+  margin-right: 10px;
 }
 .sidebar{
-  margin-top: 5px;
   background-color: #A934A2;
-  width:30vw;
+  width:300px;
 }
 </style>

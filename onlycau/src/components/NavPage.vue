@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="navpage">
     <div v-if='blogs_count'>
-      <div id="summary" v-for='blog in data'>
+      <div class="content_summary" v-for='blog in data'>
         <BlogSummary :data='blog'></BlogSummary>
       </div>
 
@@ -45,6 +45,11 @@ export default{
   created(){
     this.select_blogs(0)
   },
+  // 导航路由无效 待解决后替换watch
+  // beforeRouteUpdate(to,form,next){
+  //   this.select_blogs(0)
+  //   next()
+  // },
   watch:{
     // 检测路由参数变化 手动重新请求博客摘要内容然后回流重绘页面
     $route(){
@@ -91,5 +96,9 @@ export default{
 }
 #blogs_page_turning > span:hover{
   background-color: red;
+}
+/*日志摘要*/
+.content_summary{
+  background-color: #E1E1E1;
 }
 </style>

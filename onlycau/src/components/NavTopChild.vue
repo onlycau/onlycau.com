@@ -97,9 +97,9 @@ export default{
       this.$router.push('/' + url)
     },
     to_blogs(blog_type){
-      this.$router.replace('/blogs/'+blog_type)
+      this.$router.push({path:('/blogs/'+blog_type)})
     },
-}
+  }
 }
 </script>
 
