@@ -72,16 +72,16 @@
   background-color:#20AA73;
 }
 #carousel_1{
-  background:url('img/1.png');
+  background:url('/img/1.png');
 }
 #carousel_2{
-  background:url('img/2.png');
+  background:url('/img/2.png');
 }
 #carousel_3{
-  background:url('img/3.png');
+  background:url('/img/3.png');
 }
 #carousel_4{
-  background:url('img/4.jpeg');
+  background:url('/img/4.jpeg');
 }
 #note{
   top: 80vh;
