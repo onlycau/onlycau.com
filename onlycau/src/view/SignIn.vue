@@ -6,7 +6,7 @@
         <span>用户登录</span>
       </div>
       <div id="tips">
-        <span v-show=''>!你还没有输入账号</span>
+        <span v-show="false">!你还没有输入账号</span>
       </div>
       <div id="name">
         <input v-model='name' placeholder="用户名">

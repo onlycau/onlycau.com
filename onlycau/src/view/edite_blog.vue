@@ -14,7 +14,7 @@
 
     <div>
       文章分类:
-      <span class="new_blog_type" v-for="type in blog_types">
+      <span class="new_blog_type" v-for="type in blog_types" :key="type.id">
         <label @click='change_type(type)'><input type="radio" name="blog_type" value=type>{{type}}</label>
       </span>
     </div>

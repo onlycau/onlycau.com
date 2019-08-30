@@ -1,10 +1,15 @@
 <template>
   <div id="app">
-    <MyHeader></MyHeader>
-    <NavTop></NavTop>
-    <Welcome></Welcome>
-    <router-view></router-view>
-    <Footer></Footer>
+    <div v-if='show_header'>
+      <MyHeader></MyHeader>
+      <NavTop></NavTop>
+      <Welcome></Welcome>
+      <router-view></router-view>
+      <Footer></Footer>
+    </div>
+    <div v-else>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -22,11 +27,21 @@ export default {
     NavTop,
     Welcome,
     Footer,
+  },
+  computed:{
+    show_header(){
+      return this.$route.path !== '/author'
+    }
   }
+
 }
 </script>
 
 <style>
+*{
+  margin: 0px;
+  padding: 0px;
+}
 /*css 图形*/
 .square{
   width:100%;
