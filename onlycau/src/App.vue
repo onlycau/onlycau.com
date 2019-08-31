@@ -1,3 +1,6 @@
+<!-- to do
+  更改去掉
+     -->
 <template>
   <div id="app">
     <div v-if='show_header'>
@@ -32,8 +35,16 @@ export default {
     show_header(){
       return this.$route.path !== '/author'
     }
+  },
+  // 解决路由history模式去掉#后路由无法通过输入地址访问问题
+  mounted(){
+    window.addEventListener('haschange',()=>{
+      let current_path = window.location.hash.slice(1) // 获取输入的路由
+      if(this.$router.path !== currentPath){
+        this.$router.push(currentPath) // 动态跳转
+      }
+    },false)
   }
-
 }
 </script>
 
