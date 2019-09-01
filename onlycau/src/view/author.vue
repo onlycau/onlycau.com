@@ -4,10 +4,14 @@
       <div class="fullpage overview_">
         <AuthorOverview></AuthorOverview>
       </div>
-      <div class="fullpage skill"></div>
+      <div class="fullpage skill">
+        <AuthorSkill></AuthorSkill>
+      </div>
       <div class="fullpage experience"></div>
       <div class="fullpage project"></div>
-      <div class="fullpage contact"></div>
+      <div class="fullpage contact">
+        <AuthorContact></AuthorContact>
+      </div>
     </div>
     <div id="nav_fullpage">
       <div class="nav_img" v-for='(img,index) in imgs' :key = 'img.id'>
@@ -28,11 +32,15 @@
 <script>
 import MyCanvas from "../components/MyCanvas.vue"
 import AuthorOverview from "../components/author/AuthorOverview.vue"
+import AuthorSkill from "../components/author/AuthorSkill.vue"
+import AuthorContact from "../components/author/AuthorContact.vue"
 export default {
   name:'author',
   components:{
     MyCanvas,
-    AuthorOverview
+    AuthorOverview,
+    AuthorSkill,
+    AuthorContact,
   },
   data(){
     return {
@@ -40,7 +48,7 @@ export default {
       translateY:0,
       scroll_ele:'',
       previous:0,
-      imgs : ['house','house','house','project','contact'],
+      imgs : ['house','skill','experience','project','contact'],
       promt: ['首页','能力','经历','作品集','联系我'],
       is_enter_list:[0,0,0,0,0],
       is_enter_key:1,
@@ -88,13 +96,13 @@ export default {
     handleScroll(){
       let ele = this.scroll_ele
       let e = window.event
-      if(e.deltaY > 50 && (this.translateY < 0)){
-        clearTimeout(this.timeoutId)
-        this.scroll(ele,1)
-      }
-      else if(e.deltaY < -50 && (this.translateY > -160)){
+      if(e.deltaY > 50 && (this.translateY > -160)){
         clearTimeout(this.timeoutId)
         this.scroll(ele,-1)
+      }
+      else if(e.deltaY < -50 && (this.translateY < 0)){
+        clearTimeout(this.timeoutId)
+        this.scroll(ele,1)
       }
       this.throttle_key = false
     },
@@ -128,9 +136,6 @@ export default {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-}
-#author *{
-  color: white;
 }
 /* 全屏滚动页面*/
 #fullpage_box{

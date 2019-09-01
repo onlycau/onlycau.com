@@ -55,6 +55,7 @@ const routes = [
 ]
 
 var router =  new VueRouter({
+  // histot模式去掉#
   mode:'history',
     routes
 })

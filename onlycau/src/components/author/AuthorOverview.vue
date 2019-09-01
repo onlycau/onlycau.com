@@ -48,6 +48,7 @@ export default{
   justify-content: space-around;
   align-items: center;
   height: 100vh;
+  color: white;
 }
 /* 头像*/
 #head_portrait{
