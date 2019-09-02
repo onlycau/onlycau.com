@@ -8,7 +8,9 @@
         <AuthorSkill></AuthorSkill>
       </div>
       <div class="fullpage experience"></div>
-      <div class="fullpage project"></div>
+      <div class="fullpage project">
+        <AuthorProject></AuthorProject>
+      </div>
       <div class="fullpage contact">
         <AuthorContact></AuthorContact>
       </div>
@@ -33,6 +35,7 @@
 import MyCanvas from "../components/MyCanvas.vue"
 import AuthorOverview from "../components/author/AuthorOverview.vue"
 import AuthorSkill from "../components/author/AuthorSkill.vue"
+import AuthorProject from "../components/author/AuthorProject"
 import AuthorContact from "../components/author/AuthorContact.vue"
 export default {
   name:'author',
@@ -40,6 +43,7 @@ export default {
     MyCanvas,
     AuthorOverview,
     AuthorSkill,
+    AuthorProject,
     AuthorContact,
   },
   data(){

@@ -1,9 +1,11 @@
 <template>
-  <div id="author_skill">
+  <div id="author_skill" @mouseenter='skill_bar(skill)'>
     <div class="bar_box" v-for="(value,name,index) in skill">
       <div class="skill_name" @click='add_length(index,value)'>{{name}}</div>
       <div class="back_white"></div>
-      <div class="process_bar"></div>
+      <div class="process_bar">
+        {{value}}%
+      </div>
     </div>
   </div>
 </template>
@@ -13,17 +15,27 @@ export default{
   data(){
     return{
       skill:{
-        HTML:70,
+        HTML:75,
         CSS:70,
         JavaScript:70,
-        Mysql:55,
+        Mysql:50,
         Python:65,
-        linux:50,
+        linux:60,
         git:50
       }
     }
   },
   methods:{
+    skill_bar(skill){
+      let i = 0
+      let ele_list = document.getElementsByClassName('process_bar')
+      for(let name in skill){
+        ele_list[i].style.width = '0'
+        this.add_length(i, skill[name])
+        i += 1
+      }
+    },
+    // 定时器固定速度增长某进度条 索引为序号
     add_length(index,percentage){
       let ele = document.getElementsByClassName('process_bar')[index]
       let bar_length = 0
@@ -51,6 +63,11 @@ export default{
   width: 80vw;
   height: 50px;
 }
+.skill_name{
+  color: gray;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
 .back_white{
   position: absolute;
   width: 80vw;
@@ -61,6 +78,8 @@ export default{
   position: absolute;
   width: 0;
   height: 20px;
-  background:linear-gradient(to right,#0000CC,#66CCFF);
+  background:linear-gradient(right,#2DE,#77E);
+  text-align: center;
+  line-height: 20px;
 }
 </style>
