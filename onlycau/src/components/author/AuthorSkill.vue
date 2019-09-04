@@ -1,6 +1,6 @@
 <template>
   <div id="author_skill" @mouseenter='skill_bar(skill)'>
-    <div class="bar_box" v-for="(value,name,index) in skill">
+    <div class="bar_box" v-for="(value,name,index) in skill" :key='name.id'>
       <div class="skill_name" @click='add_length(index,value)'>{{name}}</div>
       <div class="back_white"></div>
       <div class="process_bar">
@@ -78,7 +78,7 @@ export default{
   position: absolute;
   width: 0;
   height: 20px;
-  background:linear-gradient(right,#2DE,#77E);
+  background:linear-gradient(to left,#2DE,#77E);
   text-align: center;
   line-height: 20px;
 }

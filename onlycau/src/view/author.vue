@@ -7,7 +7,9 @@
       <div class="fullpage skill">
         <AuthorSkill></AuthorSkill>
       </div>
-      <div class="fullpage experience"></div>
+      <div class="fullpage experience">
+        <AuthorExperience></AuthorExperience>
+      </div>
       <div class="fullpage project">
         <AuthorProject></AuthorProject>
       </div>
@@ -35,6 +37,7 @@
 import MyCanvas from "../components/MyCanvas.vue"
 import AuthorOverview from "../components/author/AuthorOverview.vue"
 import AuthorSkill from "../components/author/AuthorSkill.vue"
+import AuthorExperience from "../components/author/AuthorExperience"
 import AuthorProject from "../components/author/AuthorProject"
 import AuthorContact from "../components/author/AuthorContact.vue"
 export default {
@@ -43,6 +46,7 @@ export default {
     MyCanvas,
     AuthorOverview,
     AuthorSkill,
+    AuthorExperience,
     AuthorProject,
     AuthorContact,
   },

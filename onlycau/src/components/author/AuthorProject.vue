@@ -1,7 +1,7 @@
 <template>
   <div id="AuthorProject">
     <div class="book">
-      <div class="page_box" v-for='(value,index) in book'>
+      <div class="page_box" v-for='(value,index) in book' :key='value.id'>
         <div class="page_back page" @click='turning_prev(index)'>{{book[index][1]}}</div>
         <div class="page_positive page" @click='turning_next(index)'>{{book[index][0]}}</div>
       </div>
@@ -13,7 +13,7 @@ export default{
   name:'AuthorProject',
   data(){
     return{
-      book:[['pageA','pageB'],['pageC','pageD'],['pageE','pageF']]
+      book:[['pageA','pageB'],['pageC','pageD'],['pageE','pageF'],['pageG','pageH']]
     }
   },
   mounted(){
@@ -23,6 +23,17 @@ export default{
     }
   },
   methods:{
+    throttle(func,wait){
+      return ()=>{
+        let now = Date.now()
+        let that = this
+        let args = arguments
+        if(now - this.previous > wait){
+          func.apply(that, args)
+          this.previous = now
+        }
+      }
+    },
     turning_next(index){
       let ele_positive = document.getElementsByClassName('page_positive')[index]
       let ele_back = document.getElementsByClassName('page_back')[index]
@@ -30,12 +41,12 @@ export default{
       let degree_back = -90
 
       let timeoutId_positive = setInterval(()=>{
-        degree_positive += 1
+        degree_positive += 2
         ele_positive.style.transform = 'rotateY(' + degree_positive + 'deg)'
         if(degree_positive === 90){
           clearTimeout(timeoutId_positive)
           let timeoutId_back = setInterval(()=>{
-            degree_back += 1
+            degree_back += 2
             ele_back.style.transform = 'rotateY(' + degree_back + 'deg)'
             if(degree_back === 0){
               clearTimeout(timeoutId_back)
@@ -51,12 +62,12 @@ export default{
       let degree_positive = 90
 
       let timeoutId_back = setInterval(()=>{
-        degree_back -= 1
+        degree_back -= 2
         ele_back.style.transform = 'rotateY(' + degree_back + 'deg)'
         if(degree_back === -90){
           clearTimeout(timeoutId_back)
           let timeoutId_positive = setInterval(()=>{
-            degree_positive -= 1
+            degree_positive -= 2
             ele_positive.style.transform = 'rotateY(' + degree_positive + 'deg)'
             if(degree_positive === 0){
               clearTimeout(timeoutId_positive)
