@@ -8,9 +8,13 @@ export default{
   name:'AuthorExperience',
   methods:{
     test(){
+      // 原点为ele中点
       let ele = document.getElementById('card')
       let e = e||window.event
-      alert(e.offsetX)
+      let ele_width = parseInt(window.getComputedStyle(ele).width)
+      let ele_offsetX = e.offsetX - (ele_width / 2)
+      let rad = Math.atan(ele_offsetX / ele_width / 2)
+      ele.style.transform = 'rotateY(' + rad + 'rad)'
     },
   }
 }

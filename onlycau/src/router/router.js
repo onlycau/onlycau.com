@@ -1,3 +1,6 @@
+// to do
+// history 模式 服务器配置
+
 import Vue from "vue";
 import VueRouter from "vue-router";
 
@@ -15,6 +18,10 @@ import author from "../view/author.vue"
 Vue.use(VueRouter);
 
 const routes = [
+    {
+    path:'',
+    redirect:'/home'
+    },
     {
       path:"/home",
       component:home,
@@ -55,8 +62,7 @@ const routes = [
 ]
 
 var router =  new VueRouter({
-  // histot模式去掉#
-  mode:'history',
+  mode:'hash',
     routes
 })
 export default router;
