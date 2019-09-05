@@ -21,7 +21,7 @@ export default{
         Mysql:50,
         Python:65,
         linux:60,
-        git:50
+        git:60
       }
     }
   },
@@ -39,13 +39,15 @@ export default{
     add_length(index,percentage){
       let ele = document.getElementsByClassName('process_bar')[index]
       let bar_length = 0
-      let timeoutId = setInterval(()=>{
-        bar_length += 1
-        ele.style.width = bar_length + 'vw'
-        if(bar_length === percentage){
-          clearTimeout(timeoutId)
-        }
-      },16.7)
+      setTimeout(()=>{
+        let timeoutId = setInterval(()=>{
+          bar_length += 1
+          ele.style.width = bar_length + 'vw'
+          if(bar_length >= (percentage*0.8)){
+            clearTimeout(timeoutId)
+          }
+        },25)
+      },index*50)
     }
   }
 }
