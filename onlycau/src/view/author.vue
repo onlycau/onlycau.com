@@ -1,22 +1,28 @@
 <template>
   <div id="author">
     <div id="fullpage_box">
+      <!-- 简介 -->
       <div class="fullpage overview_">
         <AuthorOverview></AuthorOverview>
       </div>
+      <!-- 技能 -->
       <div class="fullpage skill">
         <AuthorSkill></AuthorSkill>
       </div>
+      <!-- 经历 -->
       <div class="fullpage experience">
         <AuthorExperience></AuthorExperience>
       </div>
+      <!-- 项目 -->
       <div class="fullpage project">
         <AuthorProject></AuthorProject>
       </div>
+      <!-- 联系我 -->
       <div class="fullpage contact">
         <AuthorContact></AuthorContact>
       </div>
     </div>
+    <!-- 右侧固定导航栏 -->
     <div id="nav_fullpage">
       <div class="nav_img" v-for='(img,index) in imgs' :key = 'img.id'>
         <div class='nav_img_right' @mouseenter='enter(index)' @mouseleave='leave(index)' @click='jump(index)'>
@@ -30,6 +36,10 @@
           <div class="triangle_right"></div>
         </div>
       </div>
+    </div>
+    <!-- 指示头与提醒脚 -->
+    <div id="nav_name" v-show='current_page'>
+      {{promt[current_page]}}
     </div>
   </div>
 </template>
@@ -98,7 +108,7 @@ export default {
           if(this.translateY%40 === 0){
             clearTimeout(this.timeoutId)
           }
-        },16.7)
+        },10)
       },50)
     },
     handleScroll(){
@@ -218,5 +228,13 @@ export default {
   background-color: grey;
   border-radius: 50%;
   z-index: -10;
+}
+/* 顶端分页名字*/
+#nav_name{
+  position: fixed;
+  top: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 180%;
 }
 </style>

@@ -1,9 +1,24 @@
 <template>
   <div id="AuthorProject">
     <div class="book">
-      <div class="page_box" v-for='(value,index) in book' :key='value.id'>
-        <div class="page_back page" @click='turning_prev(index)'>{{book[index][1]}}</div>
-        <div class="page_positive page" @click='turning_next(index)'>{{book[index][0]}}</div>
+      <div class=""></div>
+      <div class="book_box" v-for='(value,index) in book' :key='value.id'>
+        <div class="page_back page" @click='turning_prev(index)'>
+          <div class="page_box">
+            <div class="page_title">{{book[index][1].title}}</div>
+            <ul class="page_text">
+              <li v-for='item in book[index][1].text' :key='item.id'>{{item}}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="page_positive page" @click='turning_next(index)'>
+          <div class="page_box">
+            <div class="page_title">{{book[index][0].title}}</div>
+            <ul class="page_text">
+              <li v-for='item in book[index][0].text' :key='item.id'>{{item}}</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -13,13 +28,30 @@ export default{
   name:'AuthorProject',
   data(){
     return{
-      book:[['pageA','pageB'],['pageC','pageD'],['pageE','pageF'],['pageG','pageH']]
+      book:[]
     }
+  },
+  created(){
+    // 初始book数据
+    function Page(title,text){
+      this.title = title
+      this.text = text
+      Page.prototype.name = '个人博客'
+    }
+    let list_0 = ['博客的创建,访问,删除','用户的登录,注册,注销','博客的评论与网站留言(待完善)','作者的简历']
+    let list_1 = ['博客导航下拉菜单','首页轮播图','简历介绍页全屏滚动与侧边固定导航栏','技能页百分比显示','仿书籍项目介绍']
+    let list_2 = ['博客已有功能的完善,样式补充','浏览器兼容与手机端适配','响应式布局','功能添加与重构']
+    let list_3 = ['先写的网站,后添加的简历页,样式和细节一直在尽力写得更好','除了axios和富文本编辑器,其他功能都是自己慢慢实现的','网站很丑,后面会重构','github.com/onlycau.com']
+    let page_0 = new Page('功能',list_0)
+    let page_1 = new Page('样式设计',list_1)
+    let page_2 = new Page('to do',list_2)
+    let page_3 = new Page('关于本网站',list_3)
+    this.book = [[page_0,page_1],[page_2,page_3]]
   },
   mounted(){
     for(let i in this.book){
-      document.getElementsByClassName('page_positive')[i].style.zIndex = 100-i
-      document.getElementsByClassName('page_back')[i].style.zIndex = i+100
+      document.getElementsByClassName('page_positive')[i].style.zIndex = 100 - i
+      document.getElementsByClassName('page_back')[i].style.zIndex = 100 + i
     }
   },
   methods:{
@@ -91,7 +123,7 @@ export default{
   width: 80vw;
   height: 60vh;
 }
-.page_box{
+.book_box{
   display: flex;
   position: absolute;
   width: 80vw;
@@ -111,5 +143,22 @@ export default{
 .page_positive{
   box-shadow: 4px -4px 5px 0;
   transform-origin: 0 50% 0;
+}
+/* 单页内容*/
+.page_box{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.page_title{
+  text-align: center;
+  font-size: 150%;
+  color: red;
+  margin: 50px;
+}
+.page_text li{
+  line-height: 40px;
+  margin-left: 20px;
 }
 </style>
