@@ -1,7 +1,7 @@
 <template>
   <div id="navpage">
     <div v-if='blogs_count'>
-      <div class="content_summary" v-for='blog in data'>
+      <div class="content_summary" v-for='blog in data' :key='blog.id'>
         <BlogSummary :data='blog'></BlogSummary>
       </div>
 
@@ -9,7 +9,7 @@
         <span v-show='current_page - 1' @click='action(-1)'>上一页</span>
         <span v-show='current_page > 3' @click='action(-current_page+1)'>1</span>
         <span v-show='current_page > 4'>...</span>
-        <span v-show='isShow(num)' v-for='num in list' @click='action(num)'><span v-show='num==0'>|</span>{{current_page + num}}</span>
+        <span v-show='isShow(num)' v-for='num in list' :key='num.id' @click='action(num)'><span v-show='num==0'>|</span>{{current_page + num}}</span>
         <span v-show='current_page + 3 < max_page'>...</span>
         <span v-show='current_page + 2 < max_page' @click='action(max_page- current_page)'>{{max_page}}</span>
         <span v-show='current_page < max_page' @click='action(1)'>下一页</span>
@@ -43,7 +43,7 @@ export default{
       }
   },
   created(){
-    this.select_blogs(0)
+    this.select_blogs()
   },
   // 导航路由无效 待解决后替换watch
   // beforeRouteUpdate(to,form,next){
@@ -53,7 +53,7 @@ export default{
   watch:{
     // 检测路由参数变化 手动重新请求博客摘要内容然后回流重绘页面
     $route(){
-      this.select_blogs(0)
+      this.select_blogs()
     }
   },
   methods:{
@@ -66,7 +66,7 @@ export default{
       this.$data.current_page = this.$data.current_page + n
       this.select_blogs(this.$data.current_page * 5)
     },
-    select_blogs(begin){
+    select_blogs(){
       let url = this.$data.url + (this.$route.params.blog_type?this.$route.params.blog_type:'all') + '&begin=' + (this.$data.current_page*5-5)
       this.$axios.get(url).then((response)=>{
         // this.$data.data = response.data

@@ -1,26 +1,44 @@
-<!-- to do margin左右上=0 -->
+<!-- 第一次加载 如果宽度较小时去掉logo 减少所占高度 -->
 <template>
   <div id="header">
-    <div id="logo">
+    <div id="logo" v-if='client_width>415'>
       <img id="logo" src="../assets/logo_book2.png">
     </div>
-    <div id="title">
-      <h1>Onlycau的小站</h1>
+    <div id="title" :class="{phone:client_width<416}">
+      <h1><a href="http://onlycau.com">Onlycau的小站</a></h1>
     </div>
-    <div id="none"></div>
   </div>
 </template>
 <script>
   export default{
     name: 'MyHeader',
+    data(){
+      return{
+        client_width:document.body.clientWidth
+      }
+    }
   }
-</script>
+</script> 
 
 <style type="text/css">
 #header{
   display: flex;
-  justify-content: space-between;
+  display: -webkit-flex;
+  width: 100vw;
   align-items: center;
   background-color: #D1BA74;
+}
+#title{
+  flex: 1;
+  text-align: center;
+}
+#title h1{
+  font-size: 300%;
+  color: black;
+}
+/* 手机显示*/
+.phone{
+  height: 100px;
+  line-height: 100px;
 }
 </style>

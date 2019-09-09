@@ -39,7 +39,7 @@ export default{
     this.carousel()
   },
   watch:{
-    pause(val){
+    pause(){
       if(this.pause){
         clearInterval(this.timeoutId)
       }
@@ -70,7 +70,6 @@ export default{
           },16.7)
         }
         // 不能直接引用变化的图片序号
-        let i = this.current_img
         // 随机选择翻转方向
         if(Math.random()>0.5){
           this.rotate_y(ele_hide, ele_show, Math.random()>0.5)

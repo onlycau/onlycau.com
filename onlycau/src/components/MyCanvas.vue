@@ -40,7 +40,6 @@ export default{
       context.stroke()
     },
     skill(context){
-      let degree = Math.asin(6/10)
       context.beginPath()
       context.translate(18,18)
       context.moveTo(3,-4)
