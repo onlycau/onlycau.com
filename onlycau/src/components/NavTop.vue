@@ -7,7 +7,6 @@
     <NavTopChild :sth='four'></NavTopChild>
     <NavTopChild :sth='five'></NavTopChild>
     <NavTopChild :sth='six'></NavTopChild>
-
   </nav>
 </template>
 
@@ -36,14 +35,14 @@ export default{
         types:['HTML', 'JavaScript', 'Python', 'Others'],
       },
       four:{
-        url:'author',
-        name:'关于博主',
-        types:[],
-      },
-      five:{
         url:'blogs/软件配置,软件指令',
         name:'备忘录',
         types:['软件配置','软件指令']
+      },
+      five:{
+        url:'author',
+        name:'关于博主',
+        types:[],
       },
       six:{
         url:'message',
@@ -57,6 +56,10 @@ export default{
 
 <style type="text/css">
 #nav_top{
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+  font-size: 150%;
   background-color: #C8C8A9;
 }
 </style>

@@ -17,7 +17,7 @@ export default{
     change(){
       let ele = this.$refs.blister
       let key = 0
-      let timeoutId = setInterval(()=>{
+      setInterval(()=>{
         key = this.scale<1.001?0.01:-0.01
         let timer = setInterval(()=>{
           this.scale += key

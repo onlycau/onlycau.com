@@ -31,7 +31,6 @@ export default{
   computed:{
     random_choose:()=>{
       let graphs = ['square', 'rectangle','circle','oval','triangle_down']
-      let colors = ['green', 'black', 'blue']
       return graphs[Math.round(Math.random() * (graphs.length - 1))]
     }
   },

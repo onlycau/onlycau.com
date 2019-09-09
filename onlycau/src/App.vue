@@ -1,6 +1,4 @@
-<!-- to do
-  更改去掉
-     -->
+<!-- to do 逐渐定义自己的初始化样式 2更改router结构 去掉空div -->
 <template>
   <div id="app">
     <div v-if='show_header'>
@@ -40,10 +38,18 @@ export default {
 </script>
 
 <style>
-*{
-  margin: 0px;
-  padding: 0px;
-}
+/* 淘宝初始化样式*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; }
+body { background:#fff; color:#555; font-size:14px; font-family: Verdana, Arial, Helvetica, sans-serif; }
+td,th,caption { font-size:14px; }
+address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal;}
+a {text-decoration:none;}
+img { border:none; }
+ol,ul,li { list-style:none; }
+input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; }
+table { border-collapse:collapse; }
+html {overflow-y: scroll;}
+
 /*css 图形*/
 .square{
   width:100%;
