@@ -1,12 +1,7 @@
 <!-- to do 如果链接为当前路径 链接背景色改变 -->
 <template>
   <nav id="nav_top">
-    <NavTopChild :sth='one'></NavTopChild>
-    <NavTopChild :sth='two'></NavTopChild>
-    <NavTopChild :sth='three'></NavTopChild>
-    <NavTopChild :sth='four'></NavTopChild>
-    <NavTopChild :sth='five'></NavTopChild>
-    <NavTopChild :sth='six'></NavTopChild>
+    <NavTopChild v-for='item in items' :nav_data='item' :key='item.id'></NavTopChild>
   </nav>
 </template>
 
@@ -19,36 +14,36 @@ export default{
   },
   data(){
     return {
-      one:{
-        url:'home',
+      items: [{
+        url:'/home',
         name:'首页',
         types:[],
       },
-      two:{
-        url:"blogs/个人日记,计划总结",
+      {
+        url:"/blogs/个人日记,计划总结",
         name:'生活随笔',
         types:['个人日记', '计划总结']
       },
-      three:{
-        url:"blogs/HTML,JavaScript,Python,Others",
+      {
+        url:"/blogs/HTML,JavaScript,Python,Others",
         name:'学习记录',
         types:['HTML', 'JavaScript', 'Python', 'Others'],
       },
-      four:{
-        url:'blogs/软件配置,软件指令',
+      {
+        url:'/blogs/软件配置,软件指令',
         name:'备忘录',
         types:['软件配置','软件指令']
       },
-      five:{
-        url:'author',
+      {
+        url:'/author',
         name:'关于博主',
         types:[],
       },
-      six:{
-        url:'message',
+      {
+        url:'/message',
         name:'给我留言',
         types:[],
-      },
+      }]
     }
   },
 }
@@ -59,6 +54,7 @@ export default{
   display: flex;
   width: 100vw;
   justify-content: space-between;
+  flex-wrap: wrap;
   font-size: 150%;
   background-color: #C8C8A9;
 }

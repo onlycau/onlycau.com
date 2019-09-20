@@ -20,7 +20,7 @@ export default{
   },
   data(){
     return{
-      screenWidth:document.body.clientWidth
+      screenWidth:document.body.clientWidth,
     }
   },
   mounted(){
