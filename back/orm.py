@@ -35,6 +35,7 @@ class Mysql(object):
         cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         cursor.execute(sql)
         blogs = cursor.fetchall()
+        cursor.close()
         blog_add = [{'count': len(blogs)}]
         if len(blogs) == 0:
             # 未取到数据时 提前返回查询结果
@@ -49,6 +50,7 @@ class Mysql(object):
         cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         cursor.execute(sql)
         r = cursor.fetchone()
+        cursor.close()
         # 判断
         blog = r
         if blog.get('date'):
@@ -90,6 +92,7 @@ class Mysql(object):
             cursor.close()
             return 1
         else:
+            cursor.close()
             return 0
 
     def new_comment(self, table, username, content, mailbox):
@@ -113,6 +116,7 @@ class Mysql(object):
         limit %s,%s" % (table, begin, limit)
         cursor.execute(sql2)
         comments = cursor.fetchall()
+        cursor.close()
         for comment in comments:
             comment['date'] = str(comment['date'])
         return json.dumps([{'count': count}] + comments)
@@ -122,6 +126,7 @@ class Mysql(object):
         cursor = self.conn.cursor()
         cursor.execute(sql)
         count = cursor.fetchone()
+        cursor.close()
         return json.dumps(count)
 
     def sign_up(self, user):
@@ -135,6 +140,7 @@ class Mysql(object):
             cursor.close()
             return row_affected
         else:
+            cursor.close()
             return 0
 
     def sign_in(self, user):
@@ -142,6 +148,7 @@ class Mysql(object):
         cursor = self.conn.cursor()
         cursor.execute(sql)
         r = cursor.fetchone()
+        cursor.close()
         if r:
             if r[0] == user.get('password'):
                 return 1

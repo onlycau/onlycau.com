@@ -10,6 +10,7 @@ import json
 
 app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'xxxxxx'
+mysql = Mysql()
 
 
 # 请求文章摘要的后台方法，默认为最新5篇文章
@@ -23,14 +24,14 @@ def select_blogs():
         blog_type = bh.split(',')
     if request.args.get('begin'):
         begin = int(request.args.get('begin'))
-    blogs = Mysql().select_blogs(blog_type, begin)
+    blogs = mysql.select_blogs(blog_type, begin)
     return blogs
 
 
 @app.route('/api/blog/select_blog', methods=['GET'])
 def select_blog():
     blog_id = request.args.get('blog_id')
-    blog = Mysql().select_blog_by_id(blog_id)
+    blog = mysql.select_blog_by_id(blog_id)
     return blog
 
 
@@ -38,7 +39,7 @@ def select_blog():
 def new_blog():
     blog = request.get_json()
     if blog:
-        Mysql().new_blog(blog)
+        mysql.new_blog(blog)
     return "nice"
 
 
@@ -46,7 +47,7 @@ def new_blog():
 def edite_blog():
     blog = request.get_json()
     if blog.get('password') == '1961':
-        r = Mysql().edite_blog(blog)
+        r = mysql.edite_blog(blog)
         if r == 1:
             return '1'
         else:
@@ -61,7 +62,7 @@ def new_web_comment():
     text = request.args.get('content')
     mailbox = request.args.get('mailbox')
     table = request.args.get('table')
-    rows_efected = Mysql().new_comment(table, username, text, mailbox)
+    rows_efected = mysql.new_comment(table, username, text, mailbox)
     return str(rows_efected)
 
 
@@ -69,7 +70,7 @@ def new_web_comment():
 def select_comments():
     begin = request.args.get('begin')
     table = request.args.get('table')
-    web_comments = Mysql().select_comments(table, begin)
+    web_comments = mysql.select_comments(table, begin)
     return web_comments
 
 
@@ -80,11 +81,11 @@ def sign_up():
     if request.method == 'GET':
         if request.args.get('name'):
             name = request.args.get('name')
-            count = Mysql().check_name(name)
+            count = mysql.check_name(name)
             return count
     if request.method == 'POST':
         user = request.get_json()
-        r = Mysql().sign_up(user)
+        r = mysql.sign_up(user)
         if r == 1:
             return '1'
         else:
@@ -97,7 +98,7 @@ def sign_in():
     session['logged'] = True
     user = request.get_json()
     if user:
-        r = Mysql().sign_in(user)
+        r = mysql.sign_in(user)
         if r == 1:
             session['logged'] = user['name']
             return '1'
