@@ -15,6 +15,9 @@ class Mysql(object):
         self.db = 'web'
         self.conn = self.__conn()
 
+    def __del__(self):
+        self.conn.close()
+
     def __conn(self):
 
         conn = pymysql.connect(user=self.user, password=self.password,
