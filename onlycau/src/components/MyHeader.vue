@@ -24,7 +24,8 @@
 #header{
   display: flex;
   display: -webkit-flex;
-  width: 100vw;
+  width: auto;
+  margin-right: 3px;
   align-items: center;
   background-color: #D1BA74;
 }

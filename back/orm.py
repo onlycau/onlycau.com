@@ -66,6 +66,7 @@ class Mysql(object):
         ('%s','%s','%s', '%s')" % (
             blog['title'], blog['blog_type'],
             pymysql.escape_string(blog['text']), blog['summary'])
+        cursor.execute(sql1)
         sql2 = "select id from blogs order by id desc limit 1"
         cursor.execute(sql2)
         blog_id = cursor.fetchone()[0] + 1
@@ -77,8 +78,6 @@ class Mysql(object):
         `date` timestamp null default current_timestamp,\
         primary key(`id`)\
         )engine=innodb default charset=utf8;" % blog_id
-
-        cursor.execute(sql1)
         cursor.execute(sql3)
         self.conn.commit()
         cursor.close()

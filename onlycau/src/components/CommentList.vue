@@ -1,18 +1,24 @@
 <template>
   <div> 
-    <div class="comment" v-for="comment in comments">
-      <p class="comment.content">{{comment.content}}</p>
-      <span class="comment.user">{{comment.username}}</span>
-      <span class="comment.date">{{comment.date}}</span>
+    <div class="comment" v-for="comment in comments" :key='comment.id'>
+      <p class="comment-content">{{comment.content}}</p>
+      <span class="comment-user">{{comment.username}}</span>
+      <span class="comment-date">{{comment.date}}</span>
     </div>
-    <div id="comment_page_turning">
-      <span v-show='current_page - 1' @click='action(-1)'>上一页</span>
-      <span v-show='current_page > 3' @click='action(-current_page+1)'>1</span>
-      <span v-show='current_page > 4'>...</span>
-      <span v-show='isShow(num)' v-for='num in list' @click='action(num)'><span v-show='num==0'>|</span>{{current_page + num}}</span>
-      <span v-show='current_page + 3 < max_page'>...</span>
-      <span v-show='current_page + 2 < max_page' @click='action(max_page- current_page)'>{{max_page}}</span>
-      <span v-show='current_page < max_page' @click='action(1)'>下一页</span>
+    <div class="comments_page_turning">
+      <span class="btn-page_turning" :class="{'btn-disabled':current_page<=1}" @click='jump_page(-1)'><上一页</span>
+      <span v-show='current_page > 3' @click='jump_page(-current_page+1)'>1</span>
+      <span class='ellipsis' v-show='current_page > 4'>...</span>
+      <span 
+        v-for='num in list' 
+        :key='num.id' 
+        :class="{'current_page':num===0}"
+        v-show='is_show(num)' 
+        @click='jump_page(num)'
+      >{{current_page + num}}</span>
+      <span class="ellipsis" v-show='current_page + 3 < max_page'>...</span>
+      <span v-show='current_page + 2 < max_page' @click='jump_page(max_page- current_page)'>{{max_page}}</span>
+      <span class="btn-page_turning" :class="{'btn-disabled':current_page>=max_page}" @click='jump_page(1)'>下一页></span>
     </div>
   </div>
 </template>
@@ -31,22 +37,22 @@ export default{
       list:[-2,-1,0,1,2],
     }
   },
-  props:['table'],
+  props:['table_name'],
   created(){
     this.select_comment(0)
   },
   methods:{
-    isShow(num){
-      if(this.$data.current_page + num > 0 && this.$data.current_page + num <= this.$data.max_page){
+    is_show(num){
+      if(this.current_page + num > 0 && this.current_page + num <= this.max_page){
         return true
       }
     },
-    action(n){
-      this.$data.current_page = this.$data.current_page + n
-      this.select_comment(this.$data.current_page * 10)
+    jump_page(n){
+      this.current_page = this.current_page + n
+      this.select_blogs(this.current_page * this.per_page_count)
     },
     select_comment(begin){
-      let url = this.$data.url + begin +'&table=' + this.table
+      let url = this.$data.url + begin +'&table_name=' + this.table_name
       this.$axios.get(url).then((response)=>{
         let middle
         [middle, ...this.$data.comments] = response.data
@@ -58,15 +64,56 @@ export default{
 }
 </script>
 <style>
-#comment_page_turning{
+.btn-disabled{
+  pointer-events: none;
+  color: #CACACA;
+}
+/* 评论 */
+.comment{
+  margin:20px;
+  padding: 10px 15px;
+  line-height: 25px;
+  width: 800px;
+  background: #FAFAFA;
+  border: 1px #EEE solid;
+  border-radius: 3px;
+  font-size: 14px;
+}
+.comment-content{
+  color: #111;
+}
+.comment-user{
+  margin-right: 10px;
+  color:#CCC;
+}
+.comment-date{
+  color:#CCC;
+}
+/* 翻页栏*/
+.comments_page_turning{
+  margin-top: 20px;
   text-align: center;
 }
-#comment_page_turning > span{
-  margin-left: 5px;
-  margin-right: 5px;
+.btn-page_turning{
+  background-color: #EEE;
+}
+.btn-page_turning:hover{
+  background-color: #FFF;
+}
+
+.comments_page_turning > span:not([class="ellipsis"]){
+  padding: 2px 6px;
+  margin: 0 1px 0 2px;
+  border:solid 1px #ccc;
+  border-radius: 2px;
   cursor: pointer;
 }
-#comment_page_turning > span:hover{
-  background-color: green;
+.current_page{
+  background-color: red;
+  color:white;
+}
+.comments_page_turning > span:not([class="btn-page_turning"],[class="ellipsis"]):hover{
+  background-color: red;
+  color:white;
 }
 </style>

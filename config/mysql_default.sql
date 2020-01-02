@@ -38,3 +38,5 @@ create table if not exists `web_comments`(
 primary key(`id`)
 )engine=innodb default charset=utf8;
 #xxx数据库访问失败及未获得数据的处理
+#CREATE USER 'web_user'@'%' IDENTIFIED BY '020202';
+#grant all on web.* to 'web_user'@'%';

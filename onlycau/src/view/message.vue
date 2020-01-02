@@ -1,7 +1,7 @@
 <template>
   <div>
-    <NewComment :table='table'></NewComment>
-    <CommentList :table='table'></CommentList>
+    <NewComment :table_name='table_name'></NewComment>
+    <CommentList :table_name='table_name'></CommentList>
   </div>
 </template>
 <script>
@@ -16,7 +16,7 @@ export default{
   },
   data(){
     return {
-      table:'web_comments'
+      table_name:'web_comments'
     }
   }
 }

@@ -22,7 +22,7 @@
           </a>
         </div>
         <div>
-          <a href="https://www.zhihu.com/people/wu-yu-hao-7-94" target="view_window"><img src="../../assets/zhihu.svg">
+          <a href="https://stackoverflow.com/users/11683866/onlycau" target="view_window"><img src="../../assets/stackoverflow.svg">
           </a>
         </div>
         <div>

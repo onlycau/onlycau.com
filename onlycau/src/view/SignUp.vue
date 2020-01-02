@@ -225,9 +225,9 @@ export default{
   text-align: center;
 }
 .active{
-  border-color: #1E90FF;
+  border: solid 1px #549DF8;
 }
 .wrong{
-  border-color: #e0202073;
+  border: solid 1px #FF5B8B;
 }
 </style>

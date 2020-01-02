@@ -52,7 +52,8 @@ export default{
 <style type="text/css">
 #nav_top{
   display: flex;
-  width: 100vw;
+  width: auto;
+  margin-right: 3px;
   justify-content: space-between;
   flex-wrap: wrap;
   font-size: 150%;

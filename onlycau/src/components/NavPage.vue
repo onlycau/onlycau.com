@@ -5,14 +5,20 @@
         <BlogSummary :data='blog'></BlogSummary>
       </div>
 
-      <div id="blogs_page_turning">
-        <span v-show='current_page - 1' @click='action(-1)'>上一页</span>
-        <span v-show='current_page > 3' @click='action(-current_page+1)'>1</span>
-        <span v-show='current_page > 4'>...</span>
-        <span v-show='isShow(num)' v-for='num in list' :key='num.id' @click='action(num)'><span v-show='num==0'>|</span>{{current_page + num}}</span>
-        <span v-show='current_page + 3 < max_page'>...</span>
-        <span v-show='current_page + 2 < max_page' @click='action(max_page- current_page)'>{{max_page}}</span>
-        <span v-show='current_page < max_page' @click='action(1)'>下一页</span>
+      <div class="blogs_page_turning">
+        <span class="btn-page_turning" :class="{'btn-disabled':current_page<=1}" @click='jump_page(-1)'><上一页</span>
+        <span v-show='current_page > 3' @click='jump_page(-current_page+1)'>1</span>
+        <span class='ellipsis' v-show='current_page > 4'>...</span>
+        <span 
+          v-for='num in list' 
+          :key='num.id' 
+          :class="{'current_page':num===0}"
+          v-show='is_show(num)' 
+          @click='jump_page(num)'
+        >{{current_page + num}}</span>
+        <span class="ellipsis" v-show='current_page + 3 < max_page'>...</span>
+        <span v-show='current_page + 2 < max_page' @click='jump_page(max_page- current_page)'>{{max_page}}</span>
+        <span class="btn-page_turning" :class="{'btn-disabled':current_page>=max_page}" @click='jump_page(1)'>下一页></span>
       </div>
     </div>
     <div v-else>
@@ -57,26 +63,26 @@ export default{
     }
   },
   methods:{
-    isShow(num){
-      if(this.$data.current_page + num > 0 && this.$data.current_page + num <= this.$data.max_page){
+    is_show(num){
+      if(this.current_page + num > 0 && this.current_page + num <= this.max_page){
         return true
       }
     },
-    action(n){
-      this.$data.current_page = this.$data.current_page + n
-      this.select_blogs(this.$data.current_page * 5)
+    jump_page(n){
+      this.current_page = this.current_page + n
+      this.select_blogs(this.current_page * this.per_page_count)
     },
     select_blogs(){
-      let url = this.$data.url + (this.$route.params.blog_type?this.$route.params.blog_type:'all') + '&begin=' + (this.$data.current_page*5-5)
+      let url = this.url + (this.$route.params.blog_type?this.$route.params.blog_type:'all') + '&begin=' + (this.current_page*5-5)
       this.$axios.get(url).then((response)=>{
-        // this.$data.data = response.data
-        // this.$data.max_page = response.data[0].blog_count/5
-        // this.$data.data.shift()
+        // this.data = response.data
+        // this.max_page = response.data[0].blog_count/5
+        // this.data.shift()
         // 解构赋值拆分 返回文章的数量与内容
         let middle
-        [middle, ...this.$data.data] = response.data
-        this.$data.blogs_count = middle.count
-        this.$data.max_page = ((middle.count - (middle.count % this.$data.per_page_count)) / this.$data.per_page_count)
+        [middle, ...this.data] = response.data
+        this.blogs_count = middle.count
+        this.max_page = ((middle.count - (middle.count % this.per_page_count)) / this.per_page_count)
     })
     },
   }
@@ -84,18 +90,39 @@ export default{
 </script>
 
 <style type="text/css">
+#navpage{
+  margin: 5px;
+}
+#navpage .btn-disabled{
+  pointer-events: none;
+  color: #CACACA;
+}
 /* 翻页栏*/
-#blogs_page_turning{
+.blogs_page_turning{
   margin-top: 20px;
   text-align: center;
 }
-#blogs_page_turning > span{
-  margin-left: 5px;
-  margin-right: 5px;
+.btn-page_turning{
+  background-color: #EEE;
+}
+.btn-page_turning:hover{
+  background-color: #FFF;
+}
+
+.blogs_page_turning > span:not([class="ellipsis"]){
+  padding: 2px 6px;
+  margin: 0 1px 0 2px;
+  border:solid 1px #ccc;
+  border-radius: 2px;
   cursor: pointer;
 }
-#blogs_page_turning > span:hover{
+.current_page{
   background-color: red;
+  color:white;
+}
+.blogs_page_turning > span:not([class="btn-page_turning"],[class="ellipsis"]):hover{
+  background-color: red;
+  color:white;
 }
 /*日志摘要*/
 .content_summary{

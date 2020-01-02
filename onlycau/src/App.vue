@@ -49,6 +49,9 @@ ol,ul,li { list-style:none; }
 input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; }
 table { border-collapse:collapse; }
 html {overflow-y: scroll;}
+.btn-disabled{
+  cursor:not-allowed;
+}
 
 /*css 图形*/
 .square{

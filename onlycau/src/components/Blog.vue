@@ -6,8 +6,8 @@
           <span id="blog_author_blog">{{data.author}}</span>
         </div>
     <div id="blog_text_blog" v-html='data.text'></div>
-    <NewComment :table='table'></NewComment>
-    <CommentList :table='table'></CommentList>
+    <NewComment :table_name='table'></NewComment>
+    <CommentList :table_name='table'></CommentList>
   </div>
 </template>
 

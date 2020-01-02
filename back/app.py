@@ -5,10 +5,14 @@
 from flask import Flask, request, session
 from flask_cors import CORS
 
+import json
+
 from orm import Mysql
 
 app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'xxxxxx'
+
+
 
 
 # 请求文章摘要的后台方法，默认为最新5篇文章
@@ -54,21 +58,19 @@ def edite_blog():
         return '0'
 
 
-@app.route('/api/new_comment')
+@app.route('/api/new_comment',methods=['POST'])
 def new_web_comment():
-    username = request.args.get('username')
-    text = request.args.get('content')
-    mailbox = request.args.get('mailbox')
-    table = request.args.get('table')
-    rows_efected = Mysql().new_comment(table, username, text, mailbox)
+    comment = request.get_json()
+    print(comment)
+    rows_efected = Mysql().new_comment(comment['table_name'], comment['username'], comment['content'], comment['mailbox'])
     return str(rows_efected)
 
 
 @app.route('/api/comments')
 def select_comments():
     begin = request.args.get('begin')
-    table = request.args.get('table')
-    web_comments = Mysql().select_comments(table, begin)
+    table_name = request.args.get('table_name')
+    web_comments = Mysql().select_comments(table_name, begin)
     return web_comments
 
 
