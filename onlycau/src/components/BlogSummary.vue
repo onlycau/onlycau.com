@@ -6,8 +6,8 @@
         <span class='blog_title' @click="to_blog()">{{data.title}}</span>
       </div>
       <div class="overview_mid">
-        <div class="css_picture">
-          <div :class="random_choose"></div>
+        <div>
+          <a :href='picture_author'><img :src='random_picture'/></a>
         </div>
         <div class='blog_text'>
           <p>{{data.summary}}</p>
@@ -26,13 +26,15 @@ export default{
   name:'BlogSummary',
   data:function(){
     return {
+      pictures : this.$Global.pictures,
+      random_picture : '',
+      picture_author: '',
     }
   },
-  computed:{
-    random_choose:()=>{
-      let graphs = ['square', 'rectangle','circle','oval','triangle_down']
-      return graphs[Math.round(Math.random() * (graphs.length - 1))]
-    }
+  created(){
+    let picture_links = Object.keys(this.pictures)
+    this.random_picture = picture_links[Math.round(Math.random() * (picture_links.length - 1))]
+    this.picture_author = this.pictures[this.random_picture]
   },
   props:['data'],
   methods:{
@@ -74,7 +76,7 @@ export default{
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.css_picture{
+.blogsummary img{
   display: flex;
   justify-content: center;
   align-items: center;
