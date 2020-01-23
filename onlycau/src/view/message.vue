@@ -1,22 +1,19 @@
 <template>
   <div>
-    <NewComment :table_name='table_name'></NewComment>
-    <CommentList :table_name='table_name'></CommentList>
+    <Comment :blog_id='blog_id'></Comment>
   </div>
 </template>
 <script>
-import NewComment from '../components/NewComment.vue'
-import CommentList from '../components/CommentList'
+import Comment from '../components/Comment'
 
 export default{
   name:'message',
   components:{
-    NewComment,
-    CommentList
+    Comment
   },
   data(){
     return {
-      table_name:'web_comments'
+      blog_id:'0'
     }
   }
 }

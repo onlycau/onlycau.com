@@ -6,19 +6,16 @@
           <span id="blog_author_blog">{{data.author}}</span>
         </div>
     <div id="blog_text_blog" v-html='data.text'></div>
-    <NewComment :table_name='table'></NewComment>
-    <CommentList :table_name='table'></CommentList>
+    <Comment :blog_id='id'></Comment>
   </div>
 </template>
 
 <script>
-import NewComment from './NewComment'
-import CommentList from './CommentList.vue'
+import Comment from './Comment'
 export default{
   name:'Blog',
   components:{
-    CommentList,
-    NewComment
+    Comment
   },
   data:function(){
     return{
@@ -26,7 +23,7 @@ export default{
         data:{}
       },
       blog_id:this.$route.params.blog_id,
-      table:'comments_' + this.$route.params.blog_id
+      id:this.$route.params.blog_id
     }
   },
   mounted(){

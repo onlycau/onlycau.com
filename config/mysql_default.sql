@@ -29,14 +29,29 @@ primary key(`id`)
 )engine=innodb default charset=utf8;
 
 --  评论表
-create table if not exists `web_comments`(
-`id` int unsigned auto_increment,
-`username` char(30) not null,
+create table if not exists `comments`(
+`id` int(8) unsigned auto_increment,
+`blog_id` int not null,
 `content` char(200) not null,
-`mailbox` char(30) not null,
+`from_uid` int(8) not null default 0,
+`username` char(30) not null,
 `date` timestamp null default current_timestamp,
 primary key(`id`)
 )engine=innodb default charset=utf8;
+
+--  回复表
+create table if not exists `replys`(
+`id` int(8) unsigned auto_increment,
+`comment_id` int(8) not null,
+`content` char(200) not null,
+`from_uid` int(8) not null default 0,
+`to_uid` int(8) not null default 0,
+`to_name` char(30) not null,
+`username` char(30) not null,
+`date` timestamp null default current_timestamp,
+primary key(`id`)
+)engine=innodb default charset=utf8;
+
 #xxx数据库访问失败及未获得数据的处理
 #CREATE USER 'web_user'@'%' IDENTIFIED BY '020202';
 #grant all on web.* to 'web_user'@'%';

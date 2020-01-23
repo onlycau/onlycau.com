@@ -59,20 +59,29 @@ def edite_blog():
 
 
 @app.route('/api/new_comment',methods=['POST'])
-def new_web_comment():
+def new_comment():
     comment = request.get_json()
-    print(comment)
-    rows_efected = Mysql().new_comment(comment['table_name'], comment['username'], comment['content'], comment['mailbox'])
+    rows_efected = Mysql().new_comment(comment)
     return str(rows_efected)
 
+@app.route('/api/new_reply',methods=['POST'])
+def new_reply():
+    reply = request.get_json()
+    rows_efected = Mysql().new_reply(reply)
+    return str(rows_efected)
 
 @app.route('/api/comments')
 def select_comments():
     begin = request.args.get('begin')
-    table_name = request.args.get('table_name')
-    web_comments = Mysql().select_comments(table_name, begin)
+    blog_id = request.args.get('blog_id')
+    web_comments = Mysql().select_comments(blog_id, begin)
     return web_comments
 
+@app.route('/api/replys')
+def select_replys():
+    comment_id = request.args.get('comment_id')
+    web_replys = Mysql().select_replys(comment_id)
+    return web_replys
 
 # 注册
 # 注意 fals直接返回字符串时 实际客户端接收到的是字符串内包裹的内容
@@ -139,4 +148,4 @@ def home():
 if __name__ == '__main__':
     # CORS处理跨域
     CORS(app, supports_credentials=True)
-    app.run(host='127.0.0.1',port=9000)
+    app.run(host='127.0.0.1',port=9000,debug=True)

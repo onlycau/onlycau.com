@@ -70,15 +70,6 @@ class Mysql(object):
         sql2 = "select id from blogs order by id desc limit 1"
         cursor.execute(sql2)
         blog_id = cursor.fetchone()[0] + 1
-        sql3 = "create table if not exists comments_%s(\
-        `id` int unsigned auto_increment,\
-        `username` char(30) not null,\
-        `content` char(200) not null,\
-        `mailbox` char(50) not null,\
-        `date` timestamp null default current_timestamp,\
-        primary key(`id`)\
-        )engine=innodb default charset=utf8;" % blog_id
-        cursor.execute(sql3)
         self.conn.commit()
         cursor.close()
         return 1
@@ -97,31 +88,58 @@ class Mysql(object):
             cursor.close()
             return 0
 
-    def new_comment(self, table, username, content, mailbox):
-        sql = "insert into %s(username, content, mailbox) values \
-        ('%s','%s','%s')" % (
-            table, username, content, mailbox)
+    def new_comment(self, comment):
+        sql = "insert into comments(blog_id, content, from_uid, username) values \
+        ('%s','%s','%s','%s')" % (
+            comment['blog_id'], comment['content'], comment['from_uid'], comment['username'], )
         cursor = self.conn.cursor()
         row_affected = cursor.execute(sql)
         self.conn.commit()
         cursor.close()
         return row_affected
 
-    def select_comments(self, table, begin=0, limit=10):
+    def new_reply(self, reply):
+        sql = "insert into replys(comment_id, content, from_uid, to_uid, username, to_name) values \
+        ('%s','%s','%s','%s','%s','%s')" % (
+            reply['comment_id'], reply['content'], reply['from_uid'], reply['to_uid'], reply['username'], reply['to_name'])
+        cursor = self.conn.cursor()
+        row_affected = cursor.execute(sql)
+        self.conn.commit()
+        cursor.close()
+        return row_affected
+
+    def select_comments(self, blog_id, begin=0, limit=10):
         cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
-        sql1 = "select count(*) from %s" % table
+        sql1 = "select count(*) from comments where blog_id=%s" % blog_id
         cursor.execute(sql1)
         count = cursor.fetchone().get('count(*)')
         if count == 0:
             return json.dumps([{'count': count}])
-        sql2 = "select * from %s order by date desc \
-        limit %s,%s" % (table, begin, limit)
+        sql2 = "select * from comments where blog_id=%s order by date desc \
+        limit %s,%s" % (blog_id, begin, limit)
         cursor.execute(sql2)
         comments = cursor.fetchall()
         cursor.close()
         for comment in comments:
             comment['date'] = str(comment['date'])
         return json.dumps([{'count': count}] + comments)
+
+    def select_replys(self, comment_id):
+        cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
+        sql1 = "select count(*) from replys where comment_id=%s" % comment_id
+        cursor.execute(sql1)
+        count = cursor.fetchone().get('count(*)')
+        if count == 0:
+            cursor.close()
+            return '0'
+        sql2 = "select * from replys where comment_id=%s order by date desc" % comment_id
+        cursor.execute(sql2)
+        replys = cursor.fetchall()
+        for reply in replys:
+            reply['date'] = str(reply['date'])
+        cursor.close()
+        return json.dumps(replys)
+
 
     def check_name(self, name):
         sql = "select count(*) from users where name='%s'" % name
