@@ -69,7 +69,6 @@ class Mysql(object):
         cursor.execute(sql1)
         sql2 = "select id from blogs order by id desc limit 1"
         cursor.execute(sql2)
-        blog_id = cursor.fetchone()[0] + 1
         self.conn.commit()
         cursor.close()
         return 1
@@ -91,7 +90,8 @@ class Mysql(object):
     def new_comment(self, comment):
         sql = "insert into comments(blog_id, content, from_uid, username) values \
         ('%s','%s','%s','%s')" % (
-            comment['blog_id'], comment['content'], comment['from_uid'], comment['username'], )
+            comment['blog_id'], comment['content'],
+            comment['from_uid'], comment['username'], )
         cursor = self.conn.cursor()
         row_affected = cursor.execute(sql)
         self.conn.commit()
@@ -99,9 +99,11 @@ class Mysql(object):
         return row_affected
 
     def new_reply(self, reply):
-        sql = "insert into replys(comment_id, content, from_uid, to_uid, username, to_name) values \
-        ('%s','%s','%s','%s','%s','%s')" % (
-            reply['comment_id'], reply['content'], reply['from_uid'], reply['to_uid'], reply['username'], reply['to_name'])
+        sql = "insert into replys(comment_id, content, from_uid, \
+            to_uid, username, to_name) values \
+            ('%s','%s','%s','%s','%s','%s')" % (
+            reply['comment_id'], reply['content'], reply['from_uid'],
+            reply['to_uid'], reply['username'], reply['to_name'])
         cursor = self.conn.cursor()
         row_affected = cursor.execute(sql)
         self.conn.commit()
@@ -132,14 +134,14 @@ class Mysql(object):
         if count == 0:
             cursor.close()
             return '0'
-        sql2 = "select * from replys where comment_id=%s order by date desc" % comment_id
+        sql2 = "select * from replys where comment_id=%s order \
+        by date desc" % comment_id
         cursor.execute(sql2)
         replys = cursor.fetchall()
         for reply in replys:
             reply['date'] = str(reply['date'])
         cursor.close()
         return json.dumps(replys)
-
 
     def check_name(self, name):
         sql = "select count(*) from users where name='%s'" % name
@@ -176,11 +178,3 @@ class Mysql(object):
                 return 0
         else:
             return -1
-
-
-def test():
-    r = Mysql().sign_in({'name':'onlycu','password':'020202'})
-
-
-if __name__ == '__main__':
-    test()

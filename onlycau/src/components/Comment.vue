@@ -19,10 +19,10 @@
         <p class="comment-content">{{comment.content}}</p>
         <span class="comment-user">{{comment.username}}</span>
         <span class="comment-date">{{comment.date}}</span>
-        <span v-show="comment.count" class="btn-reply-see">查看回复({{comment.count}})</span>
+        <span v-show="comment.count" class="btn-reply-see" @click='is_show_reply=!is_show_reply'>{{is_show_reply?'隐藏':'查看'}}回复({{comment.count}})</span>
         <span v-show="comment.is_show_btn_reply" @click='change_reply_to(comment.username,comment.id)' class="btn-reply-new">回复</span>
       </div>
-      <div class="reply">
+      <div v-show='is_show_reply' class="reply">
         <div 
         v-if="comment.replys" 
         class="replay-item" 
@@ -63,6 +63,7 @@ export default{
     return {
       reply_to: false,
       is_show_btn_cancel: false,
+      is_show_reply: false,
       place_holder_reply : "想对作者说点什么",
       content: '',
       username: '',
