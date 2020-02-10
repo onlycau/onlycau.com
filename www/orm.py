@@ -87,6 +87,14 @@ class Mysql(object):
             cursor.close()
             return 0
 
+    def delete_blog_by_id(self,blog_id):
+        cursor = self.conn.cursor()
+        sql1 = "delete from blogs where id=%s" % blog_id
+        row_affected = cursor.execute(sql1)
+        self.conn.commit()
+        cursor.close()
+        return row_affected
+
     def new_comment(self, comment):
         sql = "insert into comments(blog_id, content, from_uid, username) values \
         ('%s','%s','%s','%s')" % (

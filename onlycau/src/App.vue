@@ -31,7 +31,7 @@ export default {
   },
   computed:{
     show_header(){
-      return this.$route.path !== '/author'
+      return ((this.$route.path !== '/author') && (this.$route.path.slice(0,11) !== '/management'))
     }
   },
 }

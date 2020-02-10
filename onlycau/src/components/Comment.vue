@@ -105,8 +105,7 @@ export default{
 
       this.$axios.post(url,this.post).then((response)=>{
         if(response.data === 1){
-          alert('ok')
-          // this.$router.go(0)
+          this.select_comment(this.reply_to !== false?this.begin:0)
         }else{
           alert('Something wrong')
         }

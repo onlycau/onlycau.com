@@ -1,5 +1,5 @@
 <script>
-const url = 'http://127.0.0.1:9000'
+const url = ''
 const client_width = document.body.clientWidth
 const pictures = {"https://s2.ax1x.com/2020/01/17/lx4qij.jpg": "https://pixabay.com/users/Bessi-909086/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=838667", 
 "https://s2.ax1x.com/2020/01/17/lx5vhd.jpg": "https://pixabay.com/users/Cleverpix-2508959/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1373171", 

@@ -13,7 +13,12 @@ import edite_blog from "../view/edite_blog.vue"
 import message from "../view/message.vue"
 import SignIn from "../view/SignIn.vue"
 import SignUp from "../view/SignUp.vue"
+
 import author from "../view/author.vue"
+
+import management from "../view/management/management.vue"
+import blog_list from "../view/management/blog_list.vue"
+import blog_new from "../view/management/blog_new.vue"
 // 要告诉 vue 使用 vueRouter
 Vue.use(VueRouter);
 
@@ -40,6 +45,7 @@ const routes = [
     },
     {
       path:"/edite_blog/:blog_id",
+      name: "edite_blog",
       component:edite_blog
     },
     {
@@ -54,10 +60,24 @@ const routes = [
       path:"/user/sign_up",
       component:SignUp
     },
+    // about author
     {
       path:'/author',
       component:author
-    }
+    },
+    // management
+    {
+      path:'/management',component:management,
+      children: [
+      {
+        path: 'blog_list',
+        component: blog_list,
+      },
+      {
+        path: 'blog_new',
+        component: blog_new,
+      }]
+    },
 
 ]
 

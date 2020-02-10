@@ -57,6 +57,11 @@ def edite_blog():
     else:
         return '0'
 
+@app.route('/api/blog/delete',methods=['GET'])
+def delete_blog():
+    blog_id = request.args.get('blog_id')
+    rows_efected = Mysql().delete_blog_by_id(blog_id)
+    return str(rows_efected)
 
 @app.route('/api/new_comment',methods=['POST'])
 def new_comment():
@@ -110,6 +115,7 @@ def sign_in():
         r = Mysql().sign_in(user)
         if r == 1:
             session['logged'] = user['name']
+            print(session['logged'])
             return '1'
         else:
             return '0'
