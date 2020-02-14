@@ -5,7 +5,7 @@
           <span id="blog_date_blog">{{data.date}}</span>
           <span id="blog_author_blog">{{data.author}}</span>
         </div>
-    <div id="blog_text_blog" v-html='data.text'></div>
+    <div id="blog_text_blog" v-html='data.html'></div>
     <Comment :blog_id='id'></Comment>
   </div>
 </template>

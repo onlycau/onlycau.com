@@ -1,5 +1,5 @@
 <template>
-  <div class="blog_new">
+  <div class="blog_edite">
     <div class="title_and_post">
       <el-input
         type="text"
@@ -10,7 +10,7 @@
         style="width: calc(100% - 222px);margin-right: 10px;font-size: 120%;">
       </el-input>
         <el-button type="warning" disabled>保存草稿</el-button>
-        <el-button type="primary" @click="dialogTableVisible = true">发布文章</el-button>
+        <el-button type="primary" @click="dialogTableVisible = true">修改文章</el-button>
         <el-dialog 
           title="发布文章" 
           :visible.sync="dialogTableVisible"
@@ -23,7 +23,7 @@
               <span>文章标签</span>
               <el-button type="info" style="margin-left: 30px">to do</el-button>
             </div>
-            <div class="blog_new_type">
+            <div class="blog_edite_type">
               <span>分类专栏</span>
               <el-select
                 v-model="blog.blog_type" 
@@ -42,7 +42,7 @@
                 </el-option-group>
               </el-select>
             </div>
-            <div class="privacy">
+            <div class="form_privacy">
               <span>发布形式</span>
               <el-radio v-model="blog.privacy" label="public" style="margin-left: 30px">公开</el-radio>
               <el-radio v-model="blog.privacy" label="private">私密</el-radio>
@@ -68,13 +68,15 @@
 
 <script>
 export default{
-  name:'blog_new',
+  name:'blog_edite',
   data() {
     return { 
       loading: false,
       dialogTableVisible: false,
-      post_url: this.$Global.url + '/api/blog/new',
+      get_url: this.$Global.url + '/api/blog/select_blog',
+      post_url: this.$Global.url + '/api/blog/edite',
       blog:{
+        blog_id: this.$route.params.blog_id,
         title: '',
         blog_type: '待选择',
         privacy: 'public',
@@ -120,14 +122,31 @@ export default{
       }],
     }
   },
+  mounted(){
+    this.select_blog(this.blog.blog_id)
+  },
   methods: {
-      // 所有操作都会被解析重新渲染
-      change(value, render){
-          // render 为 markdown 解析后的结果[html]
-          this.blog.html = value
-          this.blog.html = render;
-      },
-      // 提交
+    // 所有操作都会被解析重新渲染
+    change(value, render){
+        // render 为 markdown 解析后的结果[html]
+        this.blog.text = value
+        this.blog.html = render
+    },
+    // 提交
+    select_blog(blog_id){
+      this.$axios.get(this.get_url, {
+        params: {
+          blog_id: blog_id
+        }
+      }).then((response)=>{
+        this.blog.title = response.data.title
+        this.blog.blog_type = response.data.blog_type
+        this.blog.summary = response.data.blog_type
+        this.blog.text = response.data.blog_text
+        this.blog.html = response.data.html
+        this.$refs.md.d_value = response.data.text
+      })
+    },
     post_blog(){
       this.loading = true
       this.$axios.post(this.post_url, this.blog).then((response)=>{
@@ -145,7 +164,7 @@ export default{
 }
 </script>
 <style>
-.blog_new{
+.blog_edite{
   padding: 5px;
   background-color: #eee;
 }
@@ -155,7 +174,7 @@ export default{
 .release>div{
   margin: 20px;
 }
-.blog_new_type>span{
+.blog_edite_type>span{
   margin-right: 30px;
 }
 </style>

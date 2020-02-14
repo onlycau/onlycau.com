@@ -17,12 +17,14 @@ primary key(`id`)
 --  博客表
 create table if not exists `blogs`(
 `id` int unsigned auto_increment,
+`blog_type` char(30),
 `title` char(100) not null,
 `text` text not null,
+`html` text ,
 `summary` varchar(500),
+`privacy` char(20) ,
 `date` timestamp null default current_timestamp,
 `author` char(30) default 'onlycau',
-`blog_type` char(30),
 `tags` char(100),
 `views` int default 0,
 primary key(`id`)

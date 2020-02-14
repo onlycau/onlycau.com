@@ -62,23 +62,24 @@ class Mysql(object):
 
     def new_blog(self, blog):
         cursor = self.conn.cursor()
-        sql1 = "insert into blogs(title,blog_type,text,summary) values \
-        ('%s','%s','%s', '%s')" % (
+        sql1 = "insert into blogs(title,blog_type,text,html,summary,privacy) values \
+        ('%s','%s','%s', '%s', '%s')" % (
             blog['title'], blog['blog_type'],
-            pymysql.escape_string(blog['text']), blog['summary'])
+            pymysql.escape_string(blog['text']), blog['html'], blog['summary'], blog['privacy'])
         cursor.execute(sql1)
         sql2 = "select id from blogs order by id desc limit 1"
         cursor.execute(sql2)
+        new_blog_id = cursor.fetchone()
         self.conn.commit()
         cursor.close()
-        return 1
+        return new_blog_id
 
     def edite_blog(self, blog):
         cursor = self.conn.cursor()
         sql1 = "update blogs set title='%s', blog_type='%s',\
-        text='%s',summary='%s' where id=%s" % (
+        text='%s', html='%s', summary='%s', privacy where id=%s" % (
             blog['title'], blog['blog_type'],
-            blog['text'], blog['summary'], blog['blog_id'])
+            blog['text'], blog['html'], blog['summary'], blog['privacy'], blog['blog_id'])
         if cursor.execute(sql1) == 1:
             self.conn.commit()
             cursor.close()

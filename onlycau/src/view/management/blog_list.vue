@@ -49,7 +49,11 @@
           </el-row>
 
       </div>
-      <div class="list-main">
+      <div class="list-main"
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="#00000080">
         <div v-for="blog in blogs" :key="blog.id">
           <el-row :gutter="20">
             <el-col :span="2">
@@ -75,10 +79,16 @@
             </el-col>
             <el-col :span="4">
               <div class="grid-content bg-purple">
-                  <router-link target="_blank" :to="{ name: 'edite_blog', params: { blog_id: blog.id }}">
+                  <router-link :to="{ name: 'blog_edite', params: { blog_id: blog.id }}">
                     <el-button type="primary" icon="el-icon-edit" circle></el-button>
                   </router-link>
-                  <el-button type="danger" icon="el-icon-delete" circle @click="delete_blog(blog.id)"></el-button>
+                  <el-button 
+                    type="danger" 
+                    icon="el-icon-delete" 
+                    circle
+                    style="margin-left: 10px"
+                    @click="delete_blog(blog.id)">
+                  </el-button>
               </div>
             </el-col>
           </el-row>
@@ -103,6 +113,7 @@ export default{
   name:'blog_list',
   data() {
     return {
+      loading: true,
       // query
       options: [{
         options:[{
@@ -168,11 +179,13 @@ export default{
   },
   methods:{
     select_blogs(){
+      this.loading = true
       let url = this.url + this.value + '&begin=' + (this.currentPage*5-5)
       this.$axios.get(url).then((response)=>{
         let middle
         [middle, ...this.blogs] = response.data
         this.total = middle.count
+        this.loading = false
     })
     },
     delete_blog(blog_id) {

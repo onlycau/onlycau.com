@@ -22,11 +22,11 @@
         <span v-show="comment.count" class="btn-reply-see" @click='is_show_reply=!is_show_reply'>{{is_show_reply?'隐藏':'查看'}}回复({{comment.count}})</span>
         <span v-show="comment.is_show_btn_reply" @click='change_reply_to(comment.username,comment.id)' class="btn-reply-new">回复</span>
       </div>
-      <div v-show='is_show_reply' class="reply">
+      <div v-if="comment.replys"  v-show='is_show_reply' class="reply">
         <div 
-        v-if="comment.replys" 
         class="replay-item" 
         v-for="item in comment.replys"
+        :key="item.id"
         @mouseenter="change_is_show_btn_reply(item,true)"
         @mouseleave="change_is_show_btn_reply(item,false)">
           <span class="name-reply-from">{{item.username}}</span>
@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="comments_page_turning">
-      <span class="btn-page_turning" :class="{'btn-disabled':current_page<=1}" @click='jump_page(-1)'><上一页</span>
+      <span class="btn-page_turning" :class="{'btn-disabled':current_page<=1}" @click='jump_page(-1)'>&lt;上一页</span>
       <span v-show='current_page > 3' @click='jump_page(-current_page+1)'>1</span>
       <span class='ellipsis' v-show='current_page > 4'>...</span>
       <span 
@@ -51,7 +51,7 @@
       >{{current_page + num}}</span>
       <span class="ellipsis" v-show='current_page + 3 < max_page'>...</span>
       <span v-show='current_page + 2 < max_page' @click='jump_page(max_page- current_page)'>{{max_page}}</span>
-      <span class="btn-page_turning" :class="{'btn-disabled':current_page>=max_page}" @click='jump_page(1)'>下一页></span>
+      <span class="btn-page_turning" :class="{'btn-disabled':current_page>=max_page}" @click='jump_page(1)'>下一页&gt;</span>
     </div>
   </div>
 </template>

@@ -19,6 +19,7 @@ import author from "../view/author.vue"
 import management from "../view/management/management.vue"
 import blog_list from "../view/management/blog_list.vue"
 import blog_new from "../view/management/blog_new.vue"
+import blog_edite from "../view/management/blog_edite.vue"
 // 要告诉 vue 使用 vueRouter
 Vue.use(VueRouter);
 
@@ -76,6 +77,11 @@ const routes = [
       {
         path: 'blog_new',
         component: blog_new,
+      },
+      {
+        path: 'blog_edite/:blog_id',
+        name: 'blog_edite',
+        component: blog_edite,
       }]
     },
 

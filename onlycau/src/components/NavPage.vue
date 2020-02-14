@@ -6,7 +6,7 @@
       </div>
 
       <div class="blogs_page_turning">
-        <span class="btn-page_turning" :class="{'btn-disabled':current_page<=1}" @click='jump_page(-1)'><上一页</span>
+        <span class="btn-page_turning" :class="{'btn-disabled':current_page <= 1}" @click='jump_page(-1)'>&lt;上一页</span>
         <span v-show='current_page > 3' @click='jump_page(-current_page+1)'>1</span>
         <span class='ellipsis' v-show='current_page > 4'>...</span>
         <span 
@@ -18,7 +18,7 @@
         >{{current_page + num}}</span>
         <span class="ellipsis" v-show='current_page + 3 < max_page'>...</span>
         <span v-show='current_page + 2 < max_page' @click='jump_page(max_page- current_page)'>{{max_page}}</span>
-        <span class="btn-page_turning" :class="{'btn-disabled':current_page>=max_page}" @click='jump_page(1)'>下一页></span>
+        <span class="btn-page_turning" :class="{'btn-disabled':current_page>=max_page}" @click='jump_page(1)'>下一页&gt;</span>
       </div>
     </div>
     <div v-else>

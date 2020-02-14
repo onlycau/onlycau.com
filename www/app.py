@@ -40,20 +40,19 @@ def select_blog():
 @app.route('/api/blog/new', methods=['POST'])
 def new_blog():
     blog = request.get_json()
-    if blog:
-        Mysql().new_blog(blog)
-    return "nice"
+    new_blog_id = Mysql().new_blog(blog)
+    if new_blog_id:
+        return str(new_blog_id[0])
+    else:
+        return '0'
 
 
 @app.route('/api/blog/edite', methods=['POST'])
 def edite_blog():
     blog = request.get_json()
-    if blog.get('password') == '1961':
-        r = Mysql().edite_blog(blog)
-        if r == 1:
-            return '1'
-        else:
-            return '-1'
+    r = Mysql().edite_blog(blog)
+    if r == 1:
+        return '1'
     else:
         return '0'
 
