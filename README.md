@@ -6,8 +6,8 @@
 引用模块 富文本编辑器:wangeditor  ajax:axios   
 
 网站功能  
-![](/about/content.png)  
+![](https://github.com/onlycau/onlycau.com/row/master/about/back_end.png?raw=true)  
 vue结构  
-![](/about/vue.png)
+![](https://github.com/onlycau/onlycau.com/row/master/about/content.png)
 后端结构..
-![](/about/back_end.png)
+![](https://github.com/onlycau/onlycau.com/blob/master/about/vue.png)
